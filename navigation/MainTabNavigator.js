@@ -12,6 +12,7 @@ import VillagerScreen from '../screens/VillagerScreen';
 import DiscoverScreen from '../screens/DiscoverScreen';
 import CalendarScreen from '../screens/CalendarScreen';
 import ChatScreen from '../screens/ChatScreen';
+// import Parent from '../components/Parent/Parent';
 
 export default TabNavigator(
   {
