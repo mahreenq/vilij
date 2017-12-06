@@ -5,15 +5,22 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableHighlight,
   TouchableOpacity,
   View
 } from 'react-native';
-// import { WebBrowser, LinearGradient } from 'expo';
+import { LinearGradient } from 'expo';
 import { Calendar } from 'react-native-calendars';
 
-import { MonoText } from '../components/StyledText';
-
 export default class CalendarScreen extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      filter: 'all'
+    };
+  }
+
   static navigationOptions = {
     title: 'Calendar',
     headerTitleStyle: { textAlign: 'center', alignSelf: 'center' },
@@ -21,6 +28,14 @@ export default class CalendarScreen extends React.Component {
       backgroundColor: 'transparent'
     }
   };
+
+  toggle(filter) {
+    console.log(filter);
+
+    this.setState({
+      filter: filter
+    });
+  }
 
   markedDates = {
     '2017-12-10': {
@@ -46,46 +61,85 @@ export default class CalendarScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* <LinearGradient colors={['#474973', '#ed808c']}> */}
-        <View style={styles.navContainer}>
-          <View style={styles.navItem}>
-            <Text style={styles.allText}> All</Text>
+        <LinearGradient
+          colors={['#474973', '#ed808c']}
+          style={styles.linearGradient}
+        >
+          <TouchableHighlight
+            onPress={() => {
+              this.toggle('list');
+            }}
+          >
+            <View style={styles.navList}>
+              <Text style={[styles.navText, styles.listText]}>List</Text>
+            </View>
+          </TouchableHighlight>
+          <View style={styles.navContainer}>
+            <TouchableHighlight
+              onPress={() => {
+                this.toggle('all');
+              }}
+            >
+              <View
+                style={this.state.filter == 'all' ? styles.navUnderline : ''}
+              >
+                <Text style={[styles.navText, styles.allText]}> All </Text>
+              </View>
+            </TouchableHighlight>
+            <TouchableHighlight
+              onPress={() => {
+                this.toggle('offered');
+              }}
+            >
+              <View style={styles.navItem}>
+                <View style={styles.offeredCircle} />
+                <View
+                  style={
+                    this.state.filter == 'offered' ? styles.navUnderline : ''
+                  }
+                >
+                  <Text style={[styles.navText, styles.offeredText]}>
+                    {' '}
+                    Offered{' '}
+                  </Text>
+                </View>
+              </View>
+            </TouchableHighlight>
+            <TouchableHighlight
+              onPress={() => {
+                this.toggle('receiving');
+              }}
+            >
+              <View style={styles.navItem}>
+                <View style={styles.receivingCircle} />
+                <View
+                  style={
+                    this.state.filter == 'receiving' ? styles.navUnderline : ''
+                  }
+                >
+                  <Text style={[styles.navText, styles.receivingText]}>
+                    {' '}
+                    Receiving{' '}
+                  </Text>
+                </View>
+              </View>
+            </TouchableHighlight>
           </View>
-          <View style={styles.navItem}>
-            <View style={styles.offeredCircle} />
-            <Text style={styles.offeredText}> Offered</Text>
-          </View>
-          <View style={styles.navItem}>
-            <View style={styles.receivingCircle} />
-            <Text style={styles.receivingText}> Receiving</Text>
-          </View>
-        </View>
-        <Calendar
-          markedDates={this.markedDates}
-          markingType={'period'}
-          hideExtraDays={true}
-          theme={{
-            // backgroundColor: '#474973',
-            calendarBackground: 'transparent'
-            // textSectionTitleColor: '#b6c1cd',
-            // selectedDayBackgroundColor: '#00adf5',
-            // selectedDayTextColor: '#ffffff',
-            // todayTextColor: '#00adf5',
-            // dayTextColor: '#2d4150',
-            // textDisabledColor: '#d9e1e8',
-            // dotColor: '#00adf5',
-            // selectedDotColor: '#ffffff',
-            // arrowColor: 'orange',
-            // monthTextColor: 'blue',
-            // textDayFontFamily: 'monospace',
-            // textMonthFontFamily: 'monospace',
-            // textDayHeaderFontFamily: 'monospace',
-            // textDayFontSize: 16,
-            // textMonthFontSize: 16,
-            // textDayHeaderFontSize: 16
-          }}
-        />
-        {/* </LinearGradient> */}
+          <Calendar
+            markedDates={this.markedDates}
+            markingType={'period'}
+            hideExtraDays={true}
+            onMonthChange={month => {
+              console.log('month changed', month);
+            }}
+            theme={{
+              calendarBackground: 'transparent',
+              textSectionTitleColor: '#f8e9e7',
+              dayTextColor: '#f8e9e7',
+              monthTextColor: '#f8e9e7'
+            }}
+          />
+        </LinearGradient>
       </View>
     );
   }
@@ -94,23 +148,42 @@ export default class CalendarScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff'
+    backgroundColor: 'transparent'
+  },
+  linearGradient: {
+    flex: 1
   },
   navContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingTop: 30,
-    paddingBottom: 30
+    paddingBottom: 30,
+    paddingLeft: 30,
+    paddingRight: 30
+  },
+  navList: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    paddingTop: 30,
+    paddingRight: 30
+  },
+  listText: {
+    color: '#f8e9e7'
   },
   navItem: {
     flexDirection: 'row'
-    // borderStyle: 'solid',
-    // borderColor: '#c3a3ce',
-    // borderBottomWidth: 2
+  },
+  navText: {
+    fontSize: 15,
+    fontWeight: 'bold'
+  },
+  navUnderline: {
+    flexDirection: 'row',
+    borderStyle: 'solid',
+    borderBottomWidth: 2,
+    borderColor: '#f8e9e7'
   },
   allText: {
-    fontSize: 15,
-    fontWeight: 'bold',
     color: '#f8e9e7'
   },
   offeredCircle: {
@@ -120,8 +193,6 @@ const styles = StyleSheet.create({
     width: 17
   },
   offeredText: {
-    fontSize: 15,
-    fontWeight: 'bold',
     color: '#c3a3ce'
   },
   receivingCircle: {
@@ -131,8 +202,6 @@ const styles = StyleSheet.create({
     width: 17
   },
   receivingText: {
-    fontSize: 15,
-    fontWeight: 'bold',
     color: '#bdf3ff'
   }
 });
