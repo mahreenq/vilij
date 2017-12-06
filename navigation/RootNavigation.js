@@ -10,7 +10,7 @@ import WelcomeScreenTwo from '../screens/WelcomeScreenTwo';
 import LoginScreen from '../screens/LoginScreen';
 import SignupScreen from '../screens/SignupScreen';
 
-import Parent from '../components/Parent/Parent';
+import ParentScreen from '../screens/ParentScreen';
 
 const RootStackNavigator = StackNavigator(
   {
@@ -31,20 +31,30 @@ const RootStackNavigator = StackNavigator(
       navigationOptions: ({ navigation }) => ({
         header: null
       })
+    // Login: {
+    //   screen: LoginScreen,
+    //   navigationOptions: ({ navigation }) => ({
+    //     header: null
+    //   })
+    // },
+    // Signup: {
+    //   screen: SignupScreen,
+    //   navigationOptions: ({ navigation }) => ({
+    //     header: null
+    //   })
+    // },
     },
-    Signup: {
-      screen: SignupScreen,
+    ParentScreen: {
+      screen: ParentScreen,
       navigationOptions: ({ navigation }) => ({
         header: null
       })
     },
     Main: {
       screen: MainTabNavigator
-    }
   },
 
   {
-    lazy: true,
     navigationOptions: () => ({
       headerTitleStyle: {
         fontWeight: 'normal'

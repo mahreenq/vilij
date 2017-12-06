@@ -9,8 +9,15 @@ import {Gravatar, GravatarApi} from 'react-native-gravatar';
 
  //import {goToParent} from '../../lib/NavigationHelpers';
 
-const DiscoverList = ({parentsData , isLoading}) => {
+const DiscoverList = ({parentsData , isLoading, navigation}) => {
    // console.log(this.props.navigation.navigate);
+   console.log(navigation);
+//    const {navigate} = navigation;
+
+   handlePress = () => {
+    navigation.navigate('Parent', {parentData: {item}});
+  }
+
         return (
         <View  >
               <ScrollView>
@@ -19,35 +26,33 @@ const DiscoverList = ({parentsData , isLoading}) => {
                     styles.mainContent,
                   ]}
                   colors={['#474973', '#ED808C']}
-                  start={{ x: 0, y: 0.1 }}
+                  start={{ x: 0, y: 0.1 }} 
                   end={{ x: 0.1, y: 1 }}
                   >
                   <Text style={styles.title}> Discover </Text>
 
-
               <FlatList
                 data={parentsData}
-                renderItem={( {item} ) => 
+                renderItem={( {item} )  => 
                     <View style={styles.parentsList}>
 
                         <View style={{width:'20%'}} >
-                            <Gravatar options={{
-                                email: item.email,
-                                // parameters: { "size": "200", "d": "mm" },
-                                // secure: true
-                                }}
+                            <Gravatar options={{email: item.email,}}
                                 style={styles.roundedProfileImage} />
                         </View>
 
                         <View style={{width:'75%', paddingLeft: 15}}>
-                            <Text  style={styles.name} > {item.name}  </Text>
+                            <Text  style={styles.name} 
+                            onPress={this.handlePress} 
+                            > 
+                            {item.name}  </Text>
                             <Text style={styles.description}> {item.description}  </Text>
                         </View>
 
                     </View>
                     }
-                keyExtractor={item => item.name}
-                /> 
+                  keyExtractor={item => item.name}   /> 
+                
                 </LinearGradient>
             </ScrollView>
      </View>
