@@ -9,30 +9,34 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import LoginScreen from '../screens/LoginScreen';
 import SignupScreen from '../screens/SignupScreen';
 
+import Parent from '../components/Parent/Parent';
+
 const RootStackNavigator = StackNavigator(
   {
-    Welcome: {
-      screen: WelcomeScreen,
-      navigationOptions: ({ navigation }) => ({
-        header: null
-      })
-    },
-    Login: {
-      screen: LoginScreen,
-      navigationOptions: ({ navigation }) => ({
-        header: null
-      })
-    },
-    Signup: {
-      screen: SignupScreen,
-      navigationOptions: ({ navigation }) => ({
-        header: null
-      })
-    },
+    // Welcome: {
+    //   screen: WelcomeScreen,
+    //   navigationOptions: ({ navigation }) => ({
+    //     header: null
+    //   })
+    // },
+    // Login: {
+    //   screen: LoginScreen,
+    //   navigationOptions: ({ navigation }) => ({
+    //     header: null
+    //   })
+    // },
+    // Signup: {
+    //   screen: SignupScreen,
+    //   navigationOptions: ({ navigation }) => ({
+    //     header: null
+    //   })
+    // },
     Main: {
       screen: MainTabNavigator
-    }
+    },
+
   },
+
   {
     navigationOptions: () => ({
       headerTitleStyle: {
