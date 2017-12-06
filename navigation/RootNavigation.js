@@ -20,7 +20,7 @@ const RootStackNavigator = StackNavigator(
     //     header: null
     //   })
     // },
-    WelcomeTwo: {
+    WelcomeScreenTwo: {
       screen: WelcomeScreenTwo,
       navigationOptions: ({ navigation }) => ({
         header: null
@@ -31,30 +31,19 @@ const RootStackNavigator = StackNavigator(
       navigationOptions: ({ navigation }) => ({
         header: null
       })
-    // Login: {
-    //   screen: LoginScreen,
-    //   navigationOptions: ({ navigation }) => ({
-    //     header: null
-    //   })
-    // },
-    // Signup: {
-    //   screen: SignupScreen,
-    //   navigationOptions: ({ navigation }) => ({
-    //     header: null
-    //   })
-    // },
     },
-    ParentScreen: {
-      screen: ParentScreen,
+    Signup: {
+      screen: SignupScreen,
       navigationOptions: ({ navigation }) => ({
         header: null
       })
     },
     Main: {
       screen: MainTabNavigator
+    }
   },
-
   {
+    lazy: true,
     navigationOptions: () => ({
       headerTitleStyle: {
         fontWeight: 'normal'
