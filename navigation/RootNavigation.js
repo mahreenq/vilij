@@ -11,12 +11,12 @@ import SignupScreen from '../screens/SignupScreen';
 
 const RootStackNavigator = StackNavigator(
   {
-    Welcome: {
-      screen: WelcomeScreen,
-      navigationOptions: ({ navigation }) => ({
-        header: null
-      })
-    },
+    // Welcome: {
+    //   screen: WelcomeScreen,
+    //   navigationOptions: ({ navigation }) => ({
+    //     header: null
+    //   })
+    // },
     Login: {
       screen: LoginScreen,
       navigationOptions: ({ navigation }) => ({
@@ -34,6 +34,7 @@ const RootStackNavigator = StackNavigator(
     }
   },
   {
+    lazy: true,
     navigationOptions: () => ({
       headerTitleStyle: {
         fontWeight: 'normal'
