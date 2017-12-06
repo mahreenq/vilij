@@ -5,7 +5,8 @@ import { StackNavigator } from 'react-navigation';
 import MainTabNavigator from './MainTabNavigator';
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
 
-import WelcomeScreen from '../screens/WelcomeScreen';
+import WelcomeScreenTwo from '../screens/WelcomeScreenTwo';
+// import WelcomeScreen from '../screens/WelcomeScreen';
 import LoginScreen from '../screens/LoginScreen';
 import SignupScreen from '../screens/SignupScreen';
 
@@ -19,6 +20,17 @@ const RootStackNavigator = StackNavigator(
     //     header: null
     //   })
     // },
+    WelcomeTwo: {
+      screen: WelcomeScreenTwo,
+      navigationOptions: ({ navigation }) => ({
+        header: null
+      })
+    },
+    Login: {
+      screen: LoginScreen,
+      navigationOptions: ({ navigation }) => ({
+        header: null
+      })
     // Login: {
     //   screen: LoginScreen,
     //   navigationOptions: ({ navigation }) => ({
@@ -31,8 +43,6 @@ const RootStackNavigator = StackNavigator(
     //     header: null
     //   })
     // },
-    Main: {
-      screen: MainTabNavigator
     },
     ParentScreen: {
       screen: ParentScreen,
@@ -40,8 +50,8 @@ const RootStackNavigator = StackNavigator(
         header: null
       })
     },
- 
-
+    Main: {
+      screen: MainTabNavigator
   },
 
   {
