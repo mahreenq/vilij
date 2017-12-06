@@ -1,7 +1,8 @@
+import _ from 'lodash';
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { StyleSheet, View, Text, Image } from 'react-native';
-import { LinearGradient } from 'expo';
+import { StyleSheet, View, Text, Image, AsyncStorage } from 'react-native';
+import { LinearGradient, AppLoading } from 'expo';
 import AppIntroSlider from '../components/WelcomeSlides/AppIntroSlider.js';
 import DefaultSlide from '../components/WelcomeSlides/DefaultSlide.js';
 
@@ -62,6 +63,18 @@ const slides = [
 ];
 
 export default class App extends React.Component {
+  state = { token: null };
+
+  async componentWillMount() {
+    let token = await AsyncStorage.getItem('fb_token');
+    //this.setState({ token });
+    if (token) {
+      this.props.navigation.navigate('Home');
+      this.setState({ token });
+    } else {
+      this.setState({ token: false });
+    }
+  }
   _renderItem = props => (
     <LinearGradient
       style={[
@@ -89,6 +102,9 @@ export default class App extends React.Component {
   );
 
   render() {
+    if (_.isNull(this.state.token)) {
+      return <AppLoading />;
+    }
     _onDone = () => {
       // User finished the introduction. Show "real" app
       this.props.navigation.navigate('Login');
