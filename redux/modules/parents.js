@@ -1,58 +1,59 @@
-const parentsURL = 'project-data.json';
+const parentsURL = 'https://vilijserver.herokuapp.com/parents';
 
 //types of actions to modify our state
 
-const GET_PROJECTS_LOADING = 'GET_PROJECTS_LOADING';
-const GET_PROJECTS_ERROR = 'GET_PROJECTS_ERROR';
-const GET_PROJECTS = 'GET_PROJECTS';
+const GET_PARENTS_LOADING = 'GET_PARENTS_LOADING';
+const GET_PARENTS_ERROR = 'GET_PARENTS_ERROR';
+const GET_PARENTS = 'GET_PARENTS';
 
 //Dispatch actions, optionally with payloads
 
-const getProjectsLoading = () => {
+const getParentsLoading = () => {
     return {
-        type: GET_PROJECTS_LOADING
+        type: GET_PARENTS_LOADING
     };
 };
 
-const getProjectsError = (error) => {
+const getParentsError = (error) => {
     return {
-        type: GET_PROJECTS_ERROR,
+        type: GET_PARENTS_ERROR,
         payload: error
     };
 };
 
-const getProjects= (projectsData) => {
+const getParents= (parentsData) => {
     return {
-        type: GET_PROJECTS,
-        payload: projectsData
+        type: GET_PARENTS,
+        payload: parentsData
     };
 };
+
 
 //HELPER FN
 
 
-export const fetchProjects = () => (dispatch) => {
-    dispatch(getProjectsLoading());
+export const fetchParents = () => (dispatch) => {
+    dispatch(getParentsLoading());
 
-    return fetch(`${projectsURL}`)
+    return fetch(`${parentsURL}`)
     .then(response => response.json())
-    .then(projectsData => dispatch(getProjects(projectsData)))
-    .catch (error => dispatch(getProjectsError(error)));
+    .then(parentsData => dispatch(getParents(parentsData)))
+    .catch (error => dispatch(getParentsError(error)));
 };
 
 
 //Reducer that handles our actions and manipulates our state in the store
 
-export default function reducer(state = {isLoading: false, projectsData: []} , action){
+export default function reducer(state = {isLoading: false, parentsData: []} , action){
     switch (action.type){
-        case GET_PROJECTS_LOADING : {
+        case GET_PARENTS_LOADING : {
             return {...state, isLoading: true, error:'' };
         };
-        case GET_PROJECTS_ERROR: {
+        case GET_PARENTS_ERROR: {
             return {...state , isLoading:false , error: action.payload};
         };
-        case GET_PROJECTS : {
-            return { ...state, isLoading: false , error: '', projectsData: action.payload};
+        case GET_PARENTS : {
+            return { ...state, isLoading: false , error: '', parentsData: action.payload};
         };
         default : {
             return state;

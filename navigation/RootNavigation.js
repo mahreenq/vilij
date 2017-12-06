@@ -9,6 +9,8 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import LoginScreen from '../screens/LoginScreen';
 import SignupScreen from '../screens/SignupScreen';
 
+import Parent from '../components/Parent/Parent';
+
 const RootStackNavigator = StackNavigator(
   {
     // Welcome: {
@@ -31,8 +33,10 @@ const RootStackNavigator = StackNavigator(
     },
     Main: {
       screen: MainTabNavigator
-    }
+    },
+
   },
+
   {
     lazy: true,
     navigationOptions: () => ({
