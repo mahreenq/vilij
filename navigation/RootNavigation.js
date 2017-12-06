@@ -19,18 +19,18 @@ const RootStackNavigator = StackNavigator(
     //     header: null
     //   })
     // },
-    // Login: {
-    //   screen: LoginScreen,
-    //   navigationOptions: ({ navigation }) => ({
-    //     header: null
-    //   })
-    // },
-    // Signup: {
-    //   screen: SignupScreen,
-    //   navigationOptions: ({ navigation }) => ({
-    //     header: null
-    //   })
-    // },
+    Login: {
+      screen: LoginScreen,
+      navigationOptions: ({ navigation }) => ({
+        header: null
+      })
+    },
+    Signup: {
+      screen: SignupScreen,
+      navigationOptions: ({ navigation }) => ({
+        header: null
+      })
+    },
     Main: {
       screen: MainTabNavigator
     },
@@ -38,6 +38,7 @@ const RootStackNavigator = StackNavigator(
   },
 
   {
+    lazy: true,
     navigationOptions: () => ({
       headerTitleStyle: {
         fontWeight: 'normal'
