@@ -9,6 +9,7 @@ import {
   View
 } from 'react-native';
 import { WebBrowser } from 'expo';
+import { CalendarList } from 'react-native-calendars';
 
 import { MonoText } from '../components/StyledText';
 
@@ -23,16 +24,21 @@ export default class CalendarScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}
-        >
-          <View style={styles.welcomeContainer}>
-            <Text style={styles.getStartedText}>CALENDAR GOES HERE</Text>
-          </View>
-        </ScrollView>
-      </View>
+      <CalendarList
+        current={'2012-05-16'}
+        pastScrollRange={24}
+        futureScrollRange={24}
+      />
+      // <View style={styles.container}>
+      //   <ScrollView
+      //     style={styles.container}
+      //     contentContainerStyle={styles.contentContainer}
+      //   >
+      //     <View style={styles.welcomeContainer}>
+      //       <Text style={styles.getStartedText}>CALENDAR GOES HERE</Text>
+      //     </View>
+      //   </ScrollView>
+      // </View>
     );
   }
 
