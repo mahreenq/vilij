@@ -44,8 +44,12 @@ const RootStackNavigator = StackNavigator(
         header: null
       })
     },
+
     Main: {
       screen: MainTabNavigator
+    },
+    ParentScreen: {
+      screen: ParentScreen
     }
   },
   {
