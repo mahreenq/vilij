@@ -14,32 +14,12 @@ import ParentScreen from '../screens/ParentScreen';
 
 const RootStackNavigator = StackNavigator(
   {
-    // Welcome: {
-    //   screen: WelcomeScreen,
-    //   navigationOptions: ({ navigation }) => ({
-    //     header: null
-    //   })
-    // },
-    WelcomeScreenTwo: {
-      screen: WelcomeScreenTwo,
-      navigationOptions: ({ navigation }) => ({
-        header: null
-      })
-    },
-    Login: {
-      screen: LoginScreen,
-      navigationOptions: ({ navigation }) => ({
-        header: null
-      })
-    },
-    Signup: {
-      screen: SignupScreen,
-      navigationOptions: ({ navigation }) => ({
-        header: null
-      })
-    },
+    
     Main: {
       screen: MainTabNavigator
+    },
+    ParentScreen: {
+      screen: ParentScreen
     }
   },
   {
