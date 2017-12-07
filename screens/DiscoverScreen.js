@@ -120,8 +120,8 @@ class DiscoverScreen extends React.Component {
                       <Text style={styles.description}>- Mutual Vilijers </Text>
                     </View>
                     <Text style={styles.description}>- km away </Text>
-                  </View>
-                </View>
+                //   </View>
+                // </View>
               )}
               keyExtractor={item => item.name}
             />
