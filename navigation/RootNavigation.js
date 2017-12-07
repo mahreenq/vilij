@@ -20,18 +20,18 @@ const RootStackNavigator = StackNavigator(
     //     header: null
     //   })
     // },
-    // WelcomeScreenTwo: {
-    //   screen: WelcomeScreenTwo,
-    //   navigationOptions: ({ navigation }) => ({
-    //     header: null
-    //   })
-    // },
-    // Login: {
-    //   screen: LoginScreen,
-    //   navigationOptions: ({ navigation }) => ({
-    //     header: null
-    //   })
-    // },
+    WelcomeScreenTwo: {
+      screen: WelcomeScreenTwo,
+      navigationOptions: ({ navigation }) => ({
+        header: null
+      })
+    },
+    Login: {
+      screen: LoginScreen,
+      navigationOptions: ({ navigation }) => ({
+        header: null
+      })
+    },
     // Signup: {
     //   screen: SignupScreen,
     //   navigationOptions: ({ navigation }) => ({
