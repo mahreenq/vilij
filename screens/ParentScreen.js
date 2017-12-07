@@ -20,10 +20,13 @@ class ParentScreen extends React.Component {
 }
 
 render() { 
+
+  // console.log(state.params.parent.item.name);
+  // const parent = state.params.parent.item
   const {state} = this.props.navigation;
-  console.log(state.params.parent.item.name);
-  const parent = state.params.parent.item
-  
+  const parent = state.params.parent.item;
+
+  console.log(state.params.parent.item.name)
   return (
       this.props.isLoading ? 
           <ActivityIndicator animating={true} size="small" color="black" /> 
@@ -32,8 +35,8 @@ render() {
           parent={parent}
           isLoading={this.props.isLoading} /> 
       // <View>
-      // <Text>Name: {parent.name}</Text> 
-      // <Text>Name: {parent.description}</Text> 
+      // <Text>Name:</Text> 
+  
       // </View>
     );
   }; 
