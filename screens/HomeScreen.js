@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, FlatList, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator} from 'react-native';
+import { Image, FlatList, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator, Dimensions} from 'react-native';
 import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
 import {connect} from 'react-redux';
@@ -26,7 +26,7 @@ render() {
           <ActivityIndicator animating={true} size="small" color="black" /> 
            : 
 
-          <View >
+          <View style={styles.mainView} >
               <ScrollView>
                   <LinearGradient
                   style={[
@@ -84,6 +84,10 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps)(HomeScreen);
 
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_HEIGHT = Dimensions.get('window').height;
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -92,7 +96,13 @@ const styles = StyleSheet.create({
   mainContent: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    paddingBottom: 50,
+    
+  },
+  mainView:{
+    height: SCREEN_HEIGHT,
+    
   },
   title: {
       fontSize: 30,
