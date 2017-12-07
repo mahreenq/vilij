@@ -36,65 +36,64 @@ class DiscoverScreen extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
 
-    return this.props.isLoading ? (
-      <ActivityIndicator animating={true} size="small" color="black" />
-    ) : (
-      //     <DiscoverList
-      //     navigation = {this.props.navigation}
-      //     parentsData = {this.props.parentsData}
-      //     isLoading={this.props.isLoading} />
+  const {navigate} = this.props.navigation;
+  
+  return (
+      this.props.isLoading ? 
+          <ActivityIndicator animating={true} size="small" color="black" /> 
+           : 
 
-      <View style={styles.mainView}>
-        <ScrollView>
-          <LinearGradient
-            style={[styles.mainContent]}
-            colors={['#474973', '#ED808C']}
-            start={{ x: 0, y: 0.1 }}
-            end={{ x: 0.1, y: 1 }}
-          >
-            <Text style={styles.title}> Discover </Text>
+          <View style={styles.mainView} >
+              <ScrollView>
+                  <LinearGradient
+                  style={[
+                    styles.mainContent,
+                  ]}
+                  colors={['#474973', '#ED808C']}
+                  start={{ x: 0, y: 0.1 }} 
+                  end={{ x: 0.1, y: 1 }}
+                  >
+                  <Text style={styles.title}> Discover </Text>
 
-            <FlatList
-              data={this.props.parentsData}
-              renderItem={({ item }) => (
-                <View
-                  onPress={() => navigate('ParentScreen', { parent: { item } })}
-                  style={styles.parentsList}
-                >
-                  <View style={{ width: '20%' }}>
-                    <Gravatar
-                      options={{ email: item.email }}
-                      style={styles.roundedProfileImage}
-                    />
-                  </View>
+              <FlatList
+                data={this.props.parentsData}
+                renderItem={( {item} )  => 
+                    <View onPress={() => navigate('ParentScreen', {parent: {item}})}
+                          style={styles.parentsList}>
 
-                  <View style={{ width: '75%', paddingLeft: 30 }}>
-                    <View
-                      style={{
-                        flex: 1,
-                        flexDirection: 'row',
-                        alignItems: 'center'
-                      }}
-                      onPress={() =>
-                        navigate('ParentScreen', { parent: { item } })
-                      }
-                    >
-                      <Text
-                        style={styles.name}
-                        onPress={() =>
-                          navigate('ParentScreen', { parent: { item } })
-                        }
-                      >
-                        {item.name}
-                      </Text>
-                      <Ionicons
-                        onPress={() =>
-                          navigate('ParentScreen', { parent: { item } })
-                        }
-                        name="ios-arrow-forward"
-                        size={25}
-                        style={{ marginLeft: 10, color: '#fff' }}
-                      />
+                        <View style={{width:'20%'}} >
+                            <Gravatar 
+                                
+                                options={{email: item.email,}}
+                                style={styles.roundedProfileImage} />
+                        </View>
+
+                        <View style={{width:'75%', paddingLeft: 30}}>
+                              <View style={{flex: 1, flexDirection: 'row', alignItems:'center'}} onPress={() => navigate('ParentScreen', {parent: {item}})} >
+                                  <Text  style={styles.name} 
+                                  onPress={() => navigate('ParentScreen', {parent: {item}})}> 
+                                  {item.name}  
+                                  </Text>
+                                  <Ionicons
+                                    onPress={() => navigate('ParentScreen', {parent: {item}})}
+                                    name="ios-arrow-forward"
+                                    size={25}
+                                    style={{ marginLeft: 10, color: "#fff" }}
+                                    />  
+                                </View> 
+                            <Text onPress={() => navigate('ParentScreen', {parent: {item}})}
+                                  style={styles.description}> {item.description}  </Text>
+
+                              <View style={{flex: 1, flexDirection: 'row', alignItems:'center'}}  >
+                                  <Ionicons name="md-home"
+                                          size={20}
+                                          style={{ marginRight: 5, color: "#fff" }}
+                                          />  
+                                  <Text style={styles.description}>- Mutual Vilijers  </Text>  
+                                </View>
+                                <Text style={styles.description}>- km away  </Text>    
+                        </View>
+
                     </View>
                     <Text
                       onPress={() =>

@@ -17,33 +17,36 @@ import Parent from '../components/Parent/Parent';
 
 class ParentScreen extends React.Component {
   static navigationOptions = {
-    title: 'ParentScreen',
-    headerTitleStyle: { textAlign: 'center', alignSelf: 'center' },
+    title: '',
     headerStyle: {
-      backgroundColor: 'transparent'
-    }
+      backgroundColor: 'transparent',
+      position: 'absolute',
+      height: 50,
+      top: 0,
+      left: 0,
+      right: 0
+    },
+    headerTintColor: '#fff'
   };
+
+
 
   componentDidMount() {
     this.props.dispatch(fetchParents());
   }
 
   render() {
-    // console.log(state.params.parent.item.name);
-    // const parent = state.params.parent.item
+
     const { state } = this.props.navigation;
     const parent = state.params.parent.item;
 
-    console.log(state.params.parent.item.name);
+
     return this.props.isLoading ? (
       <ActivityIndicator animating={true} size="small" color="black" />
     ) : (
       <Parent parent={parent} isLoading={this.props.isLoading} />
     );
-    // <View>
-    // <Text>Name:</Text>
 
-    // </View>
   }
 }
 
