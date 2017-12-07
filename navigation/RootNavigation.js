@@ -20,35 +20,48 @@ const RootStackNavigator = StackNavigator(
     //     header: null
     //   })
     // },
-    WelcomeScreenTwo: {
-      screen: WelcomeScreenTwo,
-      navigationOptions: ({ navigation }) => ({
-        header: null
-      })
-    },
-    Login: {
-      screen: LoginScreen,
-      navigationOptions: ({ navigation }) => ({
-        header: null
-      })
-    },
-    Signup: {
-      screen: SignupScreen,
-      navigationOptions: ({ navigation }) => ({
-        header: null
-      })
-    },
-    ParentScreen: {
-      screen: ParentScreen,
-      navigationOptions: ({ navigation }) => ({
-        header: null
-      })
-    },
+    // WelcomeScreenTwo: {
+    //   screen: WelcomeScreenTwo,
+    //   navigationOptions: ({ navigation }) => ({
+    //     header: null
+    //   })
+    // },
+    // Login: {
+    //   screen: LoginScreen,
+    //   navigationOptions: ({ navigation }) => ({
+    //     header: null
+    //   })
+    // },
+    // Signup: {
+    //   screen: SignupScreen,
+    //   navigationOptions: ({ navigation }) => ({
+    //     header: null
+    //   })
+    // },
+    // ParentScreen: {
+    //   screen: ParentScreen,
+    //   navigationOptions: ({ navigation }) => ({
+    //     header: null
+    //   })
+    // },
+
     Main: {
       screen: MainTabNavigator
     },
     ParentScreen: {
-      screen: ParentScreen
+      screen: ParentScreen,
+      navigationOptions: ({ navigation }) => ({
+        title: '',
+        headerStyle: {
+          backgroundColor: 'transparent',
+          position: 'absolute',
+          height: 50,
+          top: 0,
+          left: 0,
+          right: 0
+        },
+        headerTintColor: '#fff'
+      })
     }
   },
   {

@@ -23,7 +23,10 @@ export default TabNavigator(
       screen: VillagerScreen
     },
     Discover: {
-      screen: DiscoverScreen
+      screen: DiscoverScreen,
+      navigationOptions: ({ navigation }) => ({
+        header: null
+      })
     },
     Calendar: {
       screen: CalendarScreen

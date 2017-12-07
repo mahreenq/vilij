@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, FlatList, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator} from 'react-native';
+import { Image, FlatList, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator, Dimensions} from 'react-native';
 import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
 import {connect} from 'react-redux';
@@ -7,6 +7,7 @@ import {fetchParents} from '../redux/modules/parents';
 import DiscoverList from '../components/DiscoverList/DiscoverList';
 import { LinearGradient } from 'expo';
 import {Gravatar, GravatarApi} from 'react-native-gravatar';
+import { Ionicons } from '@expo/vector-icons';
 
 class DiscoverScreen extends React.Component {
   static navigationOptions = {
@@ -35,7 +36,7 @@ render() {
       //     isLoading={this.props.isLoading} /> 
 
 
-          <View >
+          <View style={styles.mainView} >
               <ScrollView>
                   <LinearGradient
                   style={[
@@ -60,13 +61,30 @@ render() {
                                 style={styles.roundedProfileImage} />
                         </View>
 
-                        <View style={{width:'75%', paddingLeft: 15}}>
-                            <Text  style={styles.name} 
-                            onPress={() => navigate('ParentScreen', {parent: {item}})}
-                            > 
-                            {item.name}  </Text>
+                        <View style={{width:'75%', paddingLeft: 30}}>
+                              <View style={{flex: 1, flexDirection: 'row', alignItems:'center'}} onPress={() => navigate('ParentScreen', {parent: {item}})} >
+                                  <Text  style={styles.name} 
+                                  onPress={() => navigate('ParentScreen', {parent: {item}})}> 
+                                  {item.name}  
+                                  </Text>
+                                  <Ionicons
+                                    onPress={() => navigate('ParentScreen', {parent: {item}})}
+                                    name="ios-arrow-forward"
+                                    size={25}
+                                    style={{ marginLeft: 10, color: "#fff" }}
+                                    />  
+                                </View> 
                             <Text onPress={() => navigate('ParentScreen', {parent: {item}})}
                                   style={styles.description}> {item.description}  </Text>
+
+                              <View style={{flex: 1, flexDirection: 'row', alignItems:'center'}}  >
+                                  <Ionicons name="md-home"
+                                          size={20}
+                                          style={{ marginRight: 5, color: "#fff" }}
+                                          />  
+                                  <Text style={styles.description}>- Mutual Vilijers  </Text>  
+                                </View>
+                                <Text style={styles.description}>- km away  </Text>    
                         </View>
 
                     </View>
@@ -88,6 +106,10 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps)(DiscoverScreen);
 
+
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_HEIGHT = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -96,7 +118,12 @@ const styles = StyleSheet.create({
   mainContent: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    height: SCREEN_HEIGHT,
+    paddingBottom: 50,
+  },
+  mainView:{
+    // height: SCREEN_HEIGHT,
   },
   title: {
       fontSize: 30,
@@ -116,7 +143,7 @@ const styles = StyleSheet.create({
       fontSize: 15,
       color: 'white',
       backgroundColor: 'transparent',
-      marginBottom: 16
+      paddingBottom: 3,
     },
   parentsList:{
       backgroundColor: 'transparent',

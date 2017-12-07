@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, Platform,  StyleSheet, Text, View, Image, ScrollView, ActivityIndicator } from 'react-native';
+import { FlatList, Platform,  StyleSheet, Text, View, Image, ScrollView, ActivityIndicator, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo';
 import {Gravatar, GravatarApi} from 'react-native-gravatar';
 // import styles from './styles';
@@ -12,7 +12,7 @@ console.log(parent);
   //   title: 'Parent'
   // };
         return (
-        <View style ={styles.mainContainer} >
+        <View style ={styles.mainView} >
            <ScrollView>
            <LinearGradient
                   style={[
@@ -22,21 +22,47 @@ console.log(parent);
                   start={{ x: 0, y: 0.1 }} 
                   end={{ x: 0.1, y: 1 }}
                   >
+                  <View style ={styles.content}>
+                      <View style={{width:'20%'}} >
+                                <Gravatar options={{email: parent.email,}}
+                                    style={styles.roundedProfileImage} />
+                      </View>
                     <Text style={styles.name}> {parent.name}</Text>
-                    <Text style={styles.description}> {parent.description}</Text>
-                    <Text> {parent.children.length} Child</Text>
+                    <Text style={styles.description}> - km away</Text>
+
+                    <View style={styles.whiteBorderBottom}>
+                      <Text style={styles.description} > {parent.description}</Text>
+                    </View>
+                    <View style={styles.whiteBorderBottom}>
+                      <Text style={styles.description} > {parent.children.length} Child</Text>
+                     
+                    </View>
+                    <Text style={styles.description} > - Mutual Vilijers</Text>
+
+                    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
+                      <Text style= {styles.help}> {parent.whoYouHelped.length} Sits Offered </Text>
+                      <Text style= {styles.help}> {parent.whoHelpedYou.length} Sits Received</Text>
+                    </View>
+                  </View>
               </LinearGradient>
              </ScrollView>
           </View> 
           )
       };
 
+      
+      // {parent.children.map((child)=>{
+      //   return ( 
+      //     child.gender === "Female" ? 
+      //      <Image source={require('../../assets/images/Girl@3x.png')} /> : 
+      //   <Image source={require('../../assets/images/Boy@3x.png')}  /> 
+      //  );
+      // })}
+
      export default Parent;
 
-    //  Parent: {
-    //   screen: Parent
-    // },
-
+     const SCREEN_WIDTH = Dimensions.get('window').width;
+     const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 
 
@@ -49,7 +75,18 @@ console.log(parent);
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-around',
-        height: '100%',
+        height: SCREEN_HEIGHT,
+      },
+      content: {
+        marginTop: 55,
+        paddingTop: 40,
+        backgroundColor: 'rgba(248, 233, 231, 0.5)',
+        width: SCREEN_WIDTH*0.85,
+        height: SCREEN_HEIGHT*0.85,
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius:15,
       },
       title: {
           fontSize: 30,
@@ -58,38 +95,64 @@ console.log(parent);
           textAlign: 'center',
           marginBottom: 16,
           paddingTop: 15,
+          
         },
       name: {
         fontSize: 22,
-        color: 'white',
         backgroundColor: 'transparent',
-        marginBottom: 5
+        marginBottom: 5,
+        color: '#422B4A',
       },
       description: {
           fontSize: 15,
-          color: 'white',
           backgroundColor: 'transparent',
-          marginBottom: 16
+          color: '#422B4A',
+          paddingTop: 10,
+          paddingBottom: 10
+
         },
-      parentsList:{
-          backgroundColor: 'transparent',
-          width: '85%',
-          flex: 1,
-          flexDirection: 'row',
-          alignItems: 'center',
+        whiteBorderBottom: {
+          borderBottomWidth: 1,
+          borderColor: '#fff',
+          width: SCREEN_WIDTH*0.7,
+          flexDirection: 'column',
           justifyContent: 'center',
-          paddingBottom : 15,
-      },
+          alignItems: 'center',
+          paddingTop: 20,
+          paddingBottom: 20,
+        },
       roundedProfileImage: {
-          width:60, 
-          height:60, 
+          width:70, 
+          height:70, 
           borderWidth:1,
           borderColor:'white', 
-          borderRadius:30,
+          borderRadius:35,
         },
     
         flexOne: {
             flex: 1,
+        },
+        help: {
+          fontSize: 17,
+          backgroundColor: 'transparent',
+          color: '#422B4A',
+          width: '45%',
+          textAlign: 'center',
+          paddingTop: 20,
+          paddingBottom: 20,
         }
     
     });
+
+    // {parent.children.map((child)=>{
+    //   return ( 
+    //     <Image
+    //     source={
+    //       child.gender === "Female"
+    //         ? require('../../assets/images/girl.png')
+    //         : require('../../assets/images/boy.png')
+    //     }
+    //     style={styles.welcomeImage}
+    //   />
+    // );
+    // })}
