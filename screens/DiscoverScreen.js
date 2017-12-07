@@ -50,10 +50,13 @@ render() {
               <FlatList
                 data={this.props.parentsData}
                 renderItem={( {item} )  => 
-                    <View style={styles.parentsList}>
+                    <View onPress={() => navigate('ParentScreen', {parent: {item}})}
+                          style={styles.parentsList}>
 
                         <View style={{width:'20%'}} >
-                            <Gravatar options={{email: item.email,}}
+                            <Gravatar 
+                                
+                                options={{email: item.email,}}
                                 style={styles.roundedProfileImage} />
                         </View>
 
@@ -62,7 +65,8 @@ render() {
                             onPress={() => navigate('ParentScreen', {parent: {item}})}
                             > 
                             {item.name}  </Text>
-                            <Text style={styles.description}> {item.description}  </Text>
+                            <Text onPress={() => navigate('ParentScreen', {parent: {item}})}
+                                  style={styles.description}> {item.description}  </Text>
                         </View>
 
                     </View>
