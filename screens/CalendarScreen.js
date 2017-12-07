@@ -29,6 +29,10 @@ export default class CalendarScreen extends React.Component {
     }
   };
 
+  componentWillMount() {
+    console.log(this.props);
+  }
+
   toggle(filter) {
     console.log(filter);
 

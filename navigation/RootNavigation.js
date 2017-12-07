@@ -38,6 +38,12 @@ const RootStackNavigator = StackNavigator(
         header: null
       })
     },
+    ParentScreen: {
+      screen: ParentScreen,
+      navigationOptions: ({ navigation }) => ({
+        header: null
+      })
+    },
     Main: {
       screen: MainTabNavigator
     }
