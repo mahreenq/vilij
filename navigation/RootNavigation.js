@@ -11,6 +11,7 @@ import LoginScreen from '../screens/LoginScreen';
 import SignupScreen from '../screens/SignupScreen';
 
 import ParentScreen from '../screens/ParentScreen';
+import RequestScreen from '../screens/RequestScreen';
 
 const RootStackNavigator = StackNavigator(
   {
@@ -50,19 +51,11 @@ const RootStackNavigator = StackNavigator(
     },
     ParentScreen: {
       screen: ParentScreen,
-      navigationOptions: ({ navigation }) => ({
-        title: '',
-        headerStyle: {
-          backgroundColor: 'transparent',
-          position: 'absolute',
-          height: 50,
-          top: 0,
-          left: 0,
-          right: 0
-        },
-        headerTintColor: '#fff'
-      })
-    }
+    },
+    RequestScreen: {
+      screen: RequestScreen,
+    },
+
   },
   {
     lazy: true,
