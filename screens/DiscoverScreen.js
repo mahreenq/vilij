@@ -94,7 +94,6 @@ render() {
                 </LinearGradient>
             </ScrollView>
         </View>
-
     );
   }; 
 }
