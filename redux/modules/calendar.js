@@ -5,7 +5,10 @@ const needsURL = 'https://vilijserver.herokuapp.com/needs';
 const GET_NEEDS_LOADING = 'GET_NEEDS_LOADING';
 const GET_NEEDS_ERROR = 'GET_NEEDS_ERROR';
 const GET_NEEDS = 'GET_NEEDS';
+const SET_SCREEN = 'SET_SCREEN';
 const SET_FILTER = 'SET_FILTER';
+const SET_MONTH = 'SET_MONTH';
+const SET_DETAIL = 'SET_DETAIL';
 
 // action creators
 
@@ -29,10 +32,31 @@ const getNeeds = needsData => {
   };
 };
 
+const setScreen = screen => {
+  return {
+    type: SET_SCREEN,
+    payload: screen
+  };
+};
+
 const setFilter = filter => {
   return {
     type: SET_FILTER,
     payload: filter
+  };
+};
+
+const setMonth = month => {
+  return {
+    type: SET_MONTH,
+    payload: month
+  };
+};
+
+const setDetail = detailDate => {
+  return {
+    type: SET_DETAIL,
+    payload: detailDate
   };
 };
 
@@ -47,14 +71,33 @@ export const fetchNeeds = () => dispatch => {
     .catch(error => dispatch(getNeedsError(error)));
 };
 
+export const updateScreen = screen => dispatch => {
+  dispatch(setScreen(screen));
+};
+
 export const updateFilter = filter => dispatch => {
   dispatch(setFilter(filter));
+};
+
+export const updateMonth = month => dispatch => {
+  dispatch(setMonth(month));
+};
+
+export const updateDetail = detailDate => dispatch => {
+  dispatch(setDetail(detailDate));
 };
 
 // reducers
 
 export default function reducer(
-  state = { isLoading: false, needsData: [], filter: '' },
+  state = {
+    isLoading: false,
+    needsData: [],
+    screen: '',
+    filter: '',
+    month: {},
+    detailDate: ''
+  },
   action
 ) {
   switch (action.type) {
@@ -70,13 +113,34 @@ export default function reducer(
         isLoading: false,
         error: '',
         needsData: action.payload,
-        filter: 'all'
+        screen: 'calendar',
+        filter: 'all',
+        month: {},
+        detail: false
+      };
+    }
+    case SET_SCREEN: {
+      return {
+        ...state,
+        screen: action.payload
       };
     }
     case SET_FILTER: {
       return {
         ...state,
         filter: action.payload
+      };
+    }
+    case SET_MONTH: {
+      return {
+        ...state,
+        month: action.payload
+      };
+    }
+    case SET_DETAIL: {
+      return {
+        ...state,
+        detailDate: action.payload
       };
     }
     default: {
