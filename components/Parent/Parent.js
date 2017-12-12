@@ -74,41 +74,7 @@ const Parent = ({ parent }) => {
           )
       };
 
-      
 
-
-     export default Parent;
-
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'space-around'
-              }}
-            >
-              <Text style={styles.help}>
-                {' '}
-                {parent.whoYouHelped.length} Sits Offered{' '}
-              </Text>
-              <Text style={styles.help}>
-                {' '}
-                {parent.whoHelpedYou.length} Sits Received
-              </Text>
-            </View>
-          </View>
-        </LinearGradient>
-      </ScrollView>
-    </View>
-  );
-};
-
-// {parent.children.map((child)=>{
-//   return (
-//     child.gender === "Female" ?
-//      <Image source={require('../../assets/images/Girl@3x.png')} /> :
-//   <Image source={require('../../assets/images/Boy@3x.png')}  />
-//  );
-// })}
 
 export default Parent;
 
@@ -175,6 +141,6 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderRadius: 35
   },
-        }
+      
     
     });
