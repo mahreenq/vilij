@@ -50,12 +50,11 @@ const RootStackNavigator = StackNavigator(
       screen: MainTabNavigator
     },
     ParentScreen: {
-      screen: ParentScreen,
+      screen: ParentScreen
     },
     RequestScreen: {
-      screen: RequestScreen,
-    },
-
+      screen: RequestScreen
+    }
   },
   {
     lazy: true,

@@ -1,82 +1,144 @@
 import React from 'react';
 import {
-  Image,
-  Platform,
-  ScrollView,
   StyleSheet,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
   View,
-  ActivityIndicator
+  Text,
+  ActivityIndicator,
+  StatusBar,
+  TouchableHighlight
 } from 'react-native';
 import { LinearGradient } from 'expo';
-import { Calendar } from 'react-native-calendars';
+import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { connect } from 'react-redux';
-import { fetchNeeds, updateFilter } from '../redux/modules/calendar';
+import {
+  fetchNeeds,
+  updateScreen,
+  updateFilter,
+  updateMonth,
+  updateDetail
+} from '../redux/modules/calendar';
+// import Moment from 'moment';
+import CalendarHeader from '../components/CalendarHeader/CalendarHeader';
+import CalendarList from '../components/CalendarList/CalendarList';
+import CalendarDetail from '../components/CalendarDetail/CalendarDetail';
 
 class CalendarScreen extends React.Component {
   static navigationOptions = {
     title: 'Calendar',
-    headerTitleStyle: { textAlign: 'center', alignSelf: 'center' },
-    headerStyle: {
-      backgroundColor: 'transparent'
-    }
+    header: null
   };
 
   componentWillMount() {
     this.props.dispatch(fetchNeeds());
   }
 
-  toggle(filter) {
+  toggleScreen(screen) {
+    this.props.dispatch(updateScreen(screen));
+  }
+
+  toggleFilter(filter) {
     this.props.dispatch(updateFilter(filter));
-    console.log(filter);
+  }
+
+  toggleMonth(month) {
+    this.props.dispatch(updateMonth(month));
+  }
+
+  toggleDetail(detailDate) {
+    this.props.dispatch(updateDetail(detailDate));
+  }
+
+  getMonthName(monthNo) {
+    const monthNames = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
+
+    let monthName = '';
+
+    if (monthNo >= 1 && monthNo <= 12) {
+      monthName = monthNames[monthNo - 1];
+    }
+
+    return monthName;
+  }
+
+  getCurrentDate(yearNo, monthNo, dayNo) {
+    let currentDate = '';
+
+    let yearStr = yearNo.toString();
+    let monthStr = monthNo.toString();
+    let dayStr = dayNo.toString();
+
+    if (monthStr.length == 1) {
+      monthStr = '0' + monthStr;
+    }
+
+    if (dayStr.length == 1) {
+      dayStr = '0' + dayStr;
+    }
+
+    currentDate = `${yearStr}-${monthStr}-${dayStr}`;
+
+    return currentDate;
+  }
+
+  setCalendarLocale() {
+    LocaleConfig.locales['zz'] = {
+      monthNames: [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
+      ],
+      monthNamesShort: [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul.',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec'
+      ],
+      dayNames: [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday'
+      ],
+      dayNamesShort: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+    };
+
+    LocaleConfig.defaultLocale = 'zz';
   }
 
   render() {
-    // console.log(this.props);
-
-    let markedDates = {};
-
-    let needsData = this.props.needsData;
-    needsData.map(need => {
-      let markedDate = need.date.substr(0, 10); // yyyy-mm-dd
-
-      if (!markedDates.hasOwnProperty(markedDate)) {
-        if (this.props.filter == 'all' || this.props.filter == 'offered') {
-          markedDates[markedDate] = {
-            startingDay: true,
-            endingDay: true,
-            color: '#c3a3ce', // offered
-            textColor: '#000000'
-          };
-        }
-      }
-    });
-
-    // if (!markedDates.hasOwnProperty('2017-12-10')) {
-    //   markedDates['2017-12-10'] = {
-    //     startingDay: true,
-    //     endingDay: true,
-    //     color: '#f8e9e7',  // all
-    //     textColor: '#000000'
-    //   };
-
-    //   markedDates['2017-12-23'] = {
-    //     startingDay: true,
-    //     endingDay: true,
-    //     color: '#bdf3ff',  // receiving
-    //     textColor: '#000000'
-    //   };
-
-    //   markedDates['2017-12-24'] = {
-    //     startingDay: true,
-    //     endingDay: true,
-    //     color: '#c3a3ce',  // offered
-    //     textColor: '#000000'
-    //   };
-    // }
-
     if (this.props.isLoading) {
       return (
         <View style={styles.loading}>
@@ -84,91 +146,144 @@ class CalendarScreen extends React.Component {
         </View>
       );
     } else {
-      return (
-        <View style={styles.container}>
-          <LinearGradient
-            colors={['#474973', '#ed808c']}
-            style={styles.linearGradient}
-          >
-            <TouchableHighlight
-              onPress={() => {
-                // this.toggle('list');
-              }}
+      let markedDates = {};
+      let listDates = {};
+      let yearNo = 0;
+      let monthNo = 0;
+      let dayNo = 0;
+      let currentDate = '';
+      let monthName = '';
+
+      if (Object.keys(this.props.month).length > 0) {
+        monthNo = this.props.month.month;
+        currentDate = this.props.month.dateString;
+      } else {
+        yearNo = new Date().getFullYear();
+        monthNo = new Date().getMonth() + 1;
+        dayNo = new Date().getDate();
+
+        currentDate = this.getCurrentDate(yearNo, monthNo, dayNo);
+      }
+
+      if (monthNo > 0) {
+        monthName = this.getMonthName(monthNo);
+      }
+
+      let needsData = this.props.needsData;
+
+      needsData.map(need => {
+        let markedDate = need.date.substr(0, 10); // yyyy-mm-dd
+
+        if (!markedDates.hasOwnProperty(markedDate)) {
+          if (this.props.filter == 'all' || this.props.filter == 'offered') {
+            markedDates[markedDate] = {
+              startingDay: true,
+              endingDay: true,
+              color: '#c3a3ce', // offered
+              textColor: '#000000'
+
+              // color: '#f8e9e7',  // all
+              // color: '#bdf3ff',  // receiving
+              // color: '#c3a3ce',  // offered
+            };
+          }
+        }
+
+        if (markedDate.substr(0, 7) === currentDate.substr(0, 7)) {
+          listDates[markedDate] = {
+            name: need.parents[0].name,
+            date: need.date.substr(0, 10),
+            time: need.time,
+            location: need.parents[0].address,
+            specialNotes: need.specialNotes,
+            children: need.parents[0].children
+          };
+        }
+      });
+
+      this.setCalendarLocale();
+
+      if (this.props.detailDate.length > 0) {
+        return (
+          <View style={styles.container}>
+            <StatusBar hidden={true} />
+            <LinearGradient
+              colors={['#474973', '#ed808c']}
+              style={styles.linearGradient}
             >
-              <View style={styles.navList}>
-                <Text style={[styles.navText, styles.listText]}>List</Text>
-              </View>
-            </TouchableHighlight>
-            <View style={styles.navContainer}>
-              <TouchableHighlight
-                onPress={() => {
-                  this.toggle('all');
-                }}
+              <CalendarDetail
+                detail={listDates[this.props.detailDate]}
+                toggleDetail={this.toggleDetail.bind(this)}
+              />
+            </LinearGradient>
+          </View>
+        );
+      } else {
+        if (this.props.screen == 'calendar') {
+          return (
+            <View style={styles.container}>
+              <StatusBar hidden={true} />
+              <LinearGradient
+                colors={['#474973', '#ed808c']}
+                style={styles.linearGradient}
               >
-                <View
-                  style={this.props.filter == 'all' ? styles.navUnderline : ''}
-                >
-                  <Text style={[styles.navText, styles.allText]}> All </Text>
-                </View>
-              </TouchableHighlight>
-              <TouchableHighlight
-                onPress={() => {
-                  this.toggle('offered');
-                }}
-              >
-                <View style={styles.navItem}>
-                  <View style={styles.offeredCircle} />
-                  <View
-                    style={
-                      this.props.filter == 'offered' ? styles.navUnderline : ''
+                <CalendarHeader
+                  monthName={monthName}
+                  topNavName={'List'}
+                  toggleScreen={this.toggleScreen.bind(this)}
+                  toggleFilter={this.toggleFilter.bind(this)}
+                  filter={this.props.filter}
+                />
+                <Calendar
+                  current={currentDate}
+                  markedDates={markedDates}
+                  markingType={'period'}
+                  monthFormat={' '}
+                  hideExtraDays={true}
+                  onMonthChange={month => {
+                    this.toggleMonth(month);
+                  }}
+                  onDayPress={day => {
+                    this.toggleMonth(day);
+                    if (listDates.hasOwnProperty(day.dateString)) {
+                      this.toggleDetail(day.dateString);
                     }
-                  >
-                    <Text style={[styles.navText, styles.offeredText]}>
-                      {' '}
-                      Offered{' '}
-                    </Text>
-                  </View>
-                </View>
-              </TouchableHighlight>
-              <TouchableHighlight
-                onPress={() => {
-                  this.toggle('receiving');
-                }}
-              >
-                <View style={styles.navItem}>
-                  <View style={styles.receivingCircle} />
-                  <View
-                    style={
-                      this.props.filter == 'receiving'
-                        ? styles.navUnderline
-                        : ''
-                    }
-                  >
-                    <Text style={[styles.navText, styles.receivingText]}>
-                      {' '}
-                      Receiving{' '}
-                    </Text>
-                  </View>
-                </View>
-              </TouchableHighlight>
+                  }}
+                  theme={{
+                    calendarBackground: 'transparent',
+                    textSectionTitleColor: '#f8e9e7',
+                    dayTextColor: '#f8e9e7',
+                    monthTextColor: '#f8e9e7',
+                    textDayHeaderFontSize: 18
+                  }}
+                />
+              </LinearGradient>
             </View>
-            <Calendar
-              markedDates={markedDates}
-              markingType={'period'}
-              hideExtraDays={true}
-              onMonthChange={month => {
-                console.log('month changed', month);
-              }}
-              theme={{
-                calendarBackground: 'transparent',
-                textSectionTitleColor: '#f8e9e7',
-                dayTextColor: '#f8e9e7',
-                monthTextColor: '#f8e9e7'
-              }}
-            />
-          </LinearGradient>
-        </View>
-      );
+          );
+        } else {
+          return (
+            <View style={styles.container}>
+              <StatusBar hidden={true} />
+              <LinearGradient
+                colors={['#474973', '#ed808c']}
+                style={styles.linearGradient}
+              >
+                <CalendarHeader
+                  monthName={monthName}
+                  topNavName={'Calendar'}
+                  toggleScreen={this.toggleScreen.bind(this)}
+                  toggleFilter={this.toggleFilter.bind(this)}
+                  filter={this.props.filter}
+                />
+                <CalendarList
+                  listDates={listDates}
+                  toggleDetail={this.toggleDetail.bind(this)}
+                />
+              </LinearGradient>
+            </View>
+          );
+        }
+      }
     }
   }
 }
@@ -176,7 +291,10 @@ class CalendarScreen extends React.Component {
 const mapStateToProps = state => ({
   isLoading: state.needs.isLoading,
   needsData: state.needs.needsData,
-  filter: state.needs.filter
+  screen: state.needs.screen,
+  filter: state.needs.filter,
+  month: state.needs.month,
+  detailDate: state.needs.detailDate
 });
 
 export default connect(mapStateToProps)(CalendarScreen);
@@ -192,56 +310,5 @@ const styles = StyleSheet.create({
   },
   linearGradient: {
     flex: 1
-  },
-  navContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingTop: 30,
-    paddingBottom: 30,
-    paddingLeft: 30,
-    paddingRight: 30
-  },
-  navList: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    paddingTop: 30,
-    paddingRight: 30
-  },
-  listText: {
-    color: '#f8e9e7'
-  },
-  navItem: {
-    flexDirection: 'row'
-  },
-  navText: {
-    fontSize: 15,
-    fontWeight: 'bold'
-  },
-  navUnderline: {
-    flexDirection: 'row',
-    borderStyle: 'solid',
-    borderBottomWidth: 2,
-    borderColor: '#f8e9e7'
-  },
-  allText: {
-    color: '#f8e9e7'
-  },
-  offeredCircle: {
-    borderRadius: 17 / 2,
-    backgroundColor: '#c3a3ce',
-    height: 17,
-    width: 17
-  },
-  offeredText: {
-    color: '#c3a3ce'
-  },
-  receivingCircle: {
-    borderRadius: 17 / 2,
-    backgroundColor: '#bdf3ff',
-    height: 17,
-    width: 17
-  },
-  receivingText: {
-    color: '#bdf3ff'
   }
 });
