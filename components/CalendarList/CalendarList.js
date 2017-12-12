@@ -22,7 +22,7 @@ const CalendarList = ({ listDates, toggleDetail }) => {
                 </View>
               </View>
             </TouchableHighlight>
-            <View style={styles.calendarDetails}>
+            <View>
               <Text style={styles.detailText}>
                 You offered to help {listDates[key].name}
               </Text>
@@ -43,10 +43,9 @@ export default CalendarList;
 const styles = StyleSheet.create({
   calendarEvent: {
     flexDirection: 'row',
-    margin: '2%'
-  },
-  calendarDetails: {
-    marginTop: '5%'
+    marginTop: '3%',
+    marginBottom: '3%',
+    marginLeft: '7%'
   },
   detailText: {
     fontSize: 16,
@@ -60,7 +59,7 @@ const styles = StyleSheet.create({
     width: 56,
     flexDirection: 'row',
     justifyContent: 'center',
-    margin: '5%'
+    marginRight: '3%'
   },
   circleText: {
     backgroundColor: 'transparent',
