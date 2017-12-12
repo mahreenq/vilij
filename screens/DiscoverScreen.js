@@ -30,10 +30,6 @@ render() {
       this.props.isLoading ? 
           <ActivityIndicator animating={true} size="small" color="black" /> 
            : 
-      //     <DiscoverList
-      //     navigation = {this.props.navigation} 
-      //     parentsData = {this.props.parentsData} 
-      //     isLoading={this.props.isLoading} /> 
 
 
           <View style={styles.mainView} >

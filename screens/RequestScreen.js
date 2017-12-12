@@ -13,7 +13,7 @@ import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
 import { connect } from 'react-redux';
 import { fetchRequests } from '../redux/modules/requests';
-//import Parent from '../components/Parent/Parent';
+import SingleRequest from '../components/SingleRequest/SingleRequest';
 
 class RequestScreen extends React.Component {
   static navigationOptions = {
@@ -40,14 +40,13 @@ class RequestScreen extends React.Component {
     const { state } = this.props.navigation;
     const request = state.params.request.item;
 
-    console.log(state.params.request.item.specialNotes);
-    return <Text style = {{marginTop:100}}>Special Notes : {request.specialNotes}</Text>;
-    // this.props.isLoading ? (
-    //   <ActivityIndicator animating={true} size="small" color="black" />
-    // ) : (
-    //   <SingleRequest request={request} isLoading={this.props.isLoading} />   
-    // );
-    //   TO DO : SINGLEREQUEST  COMPONENT NOT SET UP YET
+    //console.log(state.params.request.item.specialNotes);
+    return this.props.isLoading ? (
+      <ActivityIndicator animating={true} size="small" color="black" />
+    ) : (
+      <SingleRequest request={request} isLoading={this.props.isLoading} />
+    );
+
 
   }
 }
