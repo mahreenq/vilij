@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, FlatList, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator, Dimensions} from 'react-native';
+import { Image, FlatList, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator, Dimensions, ImageBackground} from 'react-native';
 import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
 import {connect} from 'react-redux';
@@ -11,7 +11,7 @@ import Moment from 'react-moment';
 class HomeScreen extends React.Component {
    static navigationOptions = {
     header: null,
-  };
+  };  
 
   componentDidMount(){
     this.props.dispatch(fetchRequests());
@@ -27,15 +27,9 @@ render() {
            : 
 
           <View style={styles.mainView} >
-              <ScrollView>
-                  <LinearGradient
-                  style={[
-                    styles.mainContent,
-                  ]}
-                  colors={['#474973', '#ED808C']}
-                  start={{ x: 0, y: 0.1 }} 
-                  end={{ x: 0.1, y: 1 }}
-                  >
+           
+              <ImageBackground source={require('../assets/images/gradientbg.png')} style={{width: SCREEN_WIDTH, height: SCREEN_HEIGHT}}>
+
                    <TouchableOpacity
                               style={styles.offerHelpButton}
                             // onPress={() => navigate('HomeScreen')}
@@ -44,6 +38,8 @@ render() {
                                   <Text style={styles.buttonText}>Post a Need</Text> 
                               </View>
                     </TouchableOpacity>
+
+                    <ScrollView>
 
               <FlatList
                 data={this.props.requestsData}
@@ -74,23 +70,18 @@ render() {
                         </View>
 
                       </View>
-
-                      <View style={{flexDirection: 'row', paddingTop: 20}}>
-                            <Text style={styles.helped}> You helped {item.parents[0].name} : #  </Text>
-                            <Text style={styles.helped}> {item.parents[0].name} helped you : # </Text>
-                      </View>
-
-                        
-
-                    </View>
-                    
-                    
-                    
+ 
+                       <View style={{flexDirection: 'row', paddingTop: 20}}>
+                             <Text style={styles.helped}> You helped {item.parents[0].name} : #  </Text>
+                             <Text style={styles.helped}> {item.parents[0].name} helped you : # </Text>
+                       </View>
+                    </View>   
                     }
                   keyExtractor={item => item.parents[0].name}   /> 
+                  </ScrollView>
                 
-                </LinearGradient>
-            </ScrollView>
+                </ImageBackground>
+            
         </View>
 
     );
@@ -108,6 +99,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -116,13 +108,14 @@ const styles = StyleSheet.create({
   mainContent: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     paddingBottom: 50,
     
   },
   mainView:{
     height: SCREEN_HEIGHT,
     justifyContent: 'center',
+    flex: 1,
     
   },
   title: {
@@ -152,15 +145,17 @@ const styles = StyleSheet.create({
     },
   requestsList:{
       backgroundColor: 'rgba(248, 233, 231, 0.5)',
-      width: '95%',
+      width: SCREEN_WIDTH*0.88,
       flex: 1,
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
       paddingBottom : 15,
       margin : 5,
+      marginLeft: 20,
       borderRadius:15,
       padding: 20,
+    
   },
   roundedProfileImage: {
       width:60, 
@@ -176,7 +171,7 @@ const styles = StyleSheet.create({
     offerHelpButton:{
       marginRight:40,
       marginLeft:40,
-      marginTop:30,
+      marginTop:125,
       marginBottom: 30,
       paddingTop:10,
       paddingBottom:15,
@@ -194,4 +189,16 @@ const styles = StyleSheet.create({
         backgroundColor:'transparent',
     }
 
+
+
+    // <LinearGradient
+    // style={[
+    //   styles.mainContent,
+    // ]}
+    // colors={['#474973', '#ED808C']}
+    // start={{ x: 0, y: 0.1 }} 
+    // end={{ x: 0.1, y: 1 }}
+    // >
 });
+
+

@@ -24,7 +24,7 @@ class RequestScreen extends React.Component {
       height: 50,
       top: 0,
       left: 0,
-      right: 0
+      right: 0,
     },
     headerTintColor: '#fff'
   };

@@ -42,33 +42,42 @@ const Parent = ({ parent }) => {
             <View>
               <Text style={styles.purpleFont}> {parent.description}</Text>
             </View>
+                    <View >
+                      {parent.children.map((child)=>{
+                              return ( 
+                                <View key= {child._id} style={styles.childContainer}>
+                                    <Image
+                                    style={styles.childImg}
+                                    source={
+                                      child.gender === "Female"
+                                        ? require('../../assets/images/girl.png')
+                                        : require('../../assets/images/boy.png')
+                                    }
+                                  />
+                                  <Text style={styles.purpleFont} > {child.name} </Text>
+                                  <Text style={styles.purpleFont}> {child.age} years </Text>
+                              </View>
+                            );
+                            }) }
+                     
+                    </View>
+                    <Text style={styles.description} > - Mutual Vilijers</Text>
 
-            <View>
-              {parent.children.map(child => {
-                return (
-                  <View key={child._id} style={styles.childContainer}>
-                    <Image
-                      style={styles.childImg}
-                      source={
-                        child.gender === 'Female'
-                          ? require('../../assets/images/girl.png')
-                          : require('../../assets/images/boy.png')
-                      }
-                      key={child.gender}
-                    />
-                    <Text style={styles.purpleFont} key={child.name}>
-                      {' '}
-                      {child.name}{' '}
-                    </Text>
-                    <Text style={styles.purpleFont} key={child.age}>
-                      {' '}
-                      {child.age} years{' '}
-                    </Text>
+                    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
+                      <Text style= {styles.help}> {parent.whoYouHelped.length} Sits Offered </Text>
+                      <Text style= {styles.help}> {parent.whoHelpedYou.length} Sits Received</Text>
+                    </View>
                   </View>
-                );
-              })}
-            </View>
-            <Text style={styles.description}> - Mutual Vilijers</Text>
+              </LinearGradient>
+             </ScrollView>
+          </View> 
+          )
+      };
+
+      
+
+
+     export default Parent;
 
             <View
               style={{
@@ -166,50 +175,6 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderRadius: 35
   },
-
-  flexOne: {
-    flex: 1
-  },
-  help: {
-    fontSize: 17,
-    backgroundColor: 'transparent',
-    color: '#422B4A',
-    width: '45%',
-    textAlign: 'center',
-    paddingTop: 20,
-    paddingBottom: 20
-  },
-  childImg: {
-    width: 50,
-    height: 50
-  },
-  purpleFont: {
-    color: '#422B4A'
-  },
-  childContainer: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderTopWidth: 1,
-    borderColor: '#fff',
-    width: SCREEN_WIDTH * 0.7,
-    justifyContent: 'center',
-    paddingTop: 20,
-    paddingBottom: 20,
-    marginTop: 20,
-    marginBottom: 20
-  }
-});
-
-// {parent.children.map((child)=>{
-//   return (
-//     <Image
-//     source={
-//       child.gender === "Female"
-//         ? require('../../assets/images/girl.png')
-//         : require('../../assets/images/boy.png')
-//     }
-//     style={styles.welcomeImage}
-//   />
-// );
-// })}
+        }
+    
+    });

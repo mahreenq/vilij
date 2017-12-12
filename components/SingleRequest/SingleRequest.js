@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, Platform,  StyleSheet, Text, View, Image, ScrollView, ActivityIndicator, Dimensions, Button, TouchableOpacity } from 'react-native';
+import { FlatList, Platform,  StyleSheet, Text, View, Image, ScrollView, ActivityIndicator, Dimensions, Button, TouchableOpacity, ImageBackground  } from 'react-native';
 import { LinearGradient } from 'expo';
 import {Gravatar, GravatarApi} from 'react-native-gravatar';
 // import styles from './styles';
@@ -12,14 +12,7 @@ console.log(request);
         return (
         <View style ={styles.mainView} >
            <ScrollView>
-           <LinearGradient
-                  style={[
-                    styles.mainContent,
-                  ]}
-                  colors={['#474973', '#ED808C']}
-                  start={{ x: 0, y: 0.1 }} 
-                  end={{ x: 0.1, y: 1 }}
-                  >
+           <ImageBackground source={require('../../assets/images/gradientbg.png')} style={{width: SCREEN_WIDTH, height: SCREEN_HEIGHT}}>
 
 <View style ={styles.content}>
 
@@ -78,7 +71,7 @@ console.log(request);
                       {request.parents.map((parent)=>{
                               return ( 
                                 <View  key={parent._id}>
-                                  <Text style={styles.purpleFont} key={parent.name}> {parent.address} </Text>
+                                  <Text style={styles.purpleFont} key={parent.address}> {parent.address} </Text>
                               </View>
                             );
                             }) }
@@ -107,7 +100,7 @@ console.log(request);
 
 
 
-              </LinearGradient>
+              </ImageBackground>
              </ScrollView>
           </View> 
           )
@@ -128,6 +121,9 @@ console.log(request);
         flex: 1,
         backgroundColor: '#fff'
       },
+      mainView:{
+        justifyContent: 'center',
+      },
       mainContent: {
         flex: 1,
         alignItems: 'center',
@@ -135,11 +131,12 @@ console.log(request);
         height: SCREEN_HEIGHT,
       },
       content: {
-        marginTop: 55,
-        paddingTop: 40,
-        backgroundColor: 'rgba(248, 233, 231, 0.7)',
+        marginTop: 110,
+        marginLeft: 30,
+        paddingTop: 20,
+        backgroundColor: 'rgba(248, 233, 231, 0.95)',
         width: SCREEN_WIDTH*0.85,
-        height: SCREEN_HEIGHT*0.85,
+        height: SCREEN_HEIGHT*0.8,
         flexDirection: 'column',
         borderRadius:15,
       },
@@ -185,7 +182,7 @@ console.log(request);
           marginLeft:40,
           marginTop:20,
           paddingTop:10,
-          paddingBottom:10,
+          paddingBottom:5,
           backgroundColor:'#422B4A',
           borderRadius:30,
           height: 40,
