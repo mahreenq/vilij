@@ -45,9 +45,9 @@ console.log(parent);
                                         ? require('../../assets/images/girl.png')
                                         : require('../../assets/images/boy.png')
                                     }
-                                  key = {child.gender}/>
-                                  <Text style={styles.purpleFont} key={child.name}> {child.name} </Text>
-                                  <Text style={styles.purpleFont}  key={child.age}> {child.age} years </Text>
+                                  />
+                                  <Text style={styles.purpleFont} > {child.name} </Text>
+                                  <Text style={styles.purpleFont}> {child.age} years </Text>
                               </View>
                             );
                             }) }
@@ -67,13 +67,7 @@ console.log(parent);
       };
 
       
-      // {parent.children.map((child)=>{
-      //   return ( 
-      //     child.gender === "Female" ? 
-      //      <Image source={require('../../assets/images/Girl@3x.png')} /> : 
-      //   <Image source={require('../../assets/images/Boy@3x.png')}  /> 
-      //  );
-      // })}
+
 
      export default Parent;
 
@@ -180,16 +174,3 @@ console.log(parent);
         }
     
     });
-
-    // {parent.children.map((child)=>{
-    //   return ( 
-    //     <Image
-    //     source={
-    //       child.gender === "Female"
-    //         ? require('../../assets/images/girl.png')
-    //         : require('../../assets/images/boy.png')
-    //     }
-    //     style={styles.welcomeImage}
-    //   />
-    // );
-    // })}
