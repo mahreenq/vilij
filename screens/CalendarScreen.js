@@ -189,15 +189,17 @@ class CalendarScreen extends React.Component {
           }
         }
 
-        if (markedDate.substr(0, 7) === currentDate.substr(0, 7)) {
-          listDates[markedDate] = {
-            name: need.parents[0].name,
-            date: need.date.substr(0, 10),
-            time: need.time,
-            location: need.parents[0].address,
-            specialNotes: need.specialNotes,
-            children: need.parents[0].children
-          };
+        if (markedDate.substr(0, 7) == currentDate.substr(0, 7)) {
+          if (this.props.filter == 'all' || this.props.filter == 'offered') {
+            listDates[markedDate] = {
+              name: need.parents[0].name,
+              date: need.date.substr(0, 10),
+              time: need.time,
+              location: need.parents[0].address,
+              specialNotes: need.specialNotes,
+              children: need.parents[0].children
+            };
+          }
         }
       });
 

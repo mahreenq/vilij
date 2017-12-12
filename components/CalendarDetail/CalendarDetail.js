@@ -68,9 +68,9 @@ const CalendarDetail = ({ detail, toggleDetail }) => {
           </Text>
         </View>
       </View>
-      <TouchableHighlight onPress={() => {}} style={styles.button}>
+      {/* <TouchableHighlight onPress={() => {}} style={styles.button}>
         <Text style={styles.buttonText}>Chat</Text>
-      </TouchableHighlight>
+      </TouchableHighlight> */}
     </View>
   );
 };
@@ -79,8 +79,8 @@ export default CalendarDetail;
 
 const styles = StyleSheet.create({
   details: {
+    height: '93%',
     margin: '5%',
-    height: '95%',
     borderRadius: 10,
     backgroundColor: '#f8e9e7',
     justifyContent: 'space-between'
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   detailHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingTop: '10%',
+    paddingTop: '8%',
     paddingLeft: '8%',
     paddingRight: '8%',
     paddingBottom: '2%'
@@ -126,8 +126,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   childImage: {
-    width: 65,
     height: 65,
+    width: 65,
     marginBottom: '1%'
   },
   detailMargin: {
