@@ -169,17 +169,39 @@ class CalendarScreen extends React.Component {
         monthName = this.getMonthName(monthNo);
       }
 
-      let needsData = this.props.needsData;
+      // temporary, hard-coded parent ID for testing,
+      // to be replaced by parent ID that is actually logged in
+      let parentId = '5a270686a0d3760014197891';
+
+      let needsData = this.props.needsData.filter(need => {
+        return (
+          need.parents[0]._id == parentId ||
+          need.offered.find(parent => parent._id == parentId)
+        );
+      });
 
       needsData.map(need => {
         let markedDate = need.date.substr(0, 10); // yyyy-mm-dd
+        let filterType = '';
+        let color = '';
+
+        if (need.parents[0]._id != parentId) {
+          filterType = 'offered';
+          color = '#c3a3ce';
+        } else if (Object.keys(need.offered).length > 0) {
+          filterType = 'received';
+          color = '#bdf3ff';
+        } else {
+          filterType = 'all';
+          color = '#f8e9e7';
+        }
 
         if (!markedDates.hasOwnProperty(markedDate)) {
           if (this.props.filter == 'all' || this.props.filter == 'offered') {
             markedDates[markedDate] = {
               startingDay: true,
               endingDay: true,
-              color: '#c3a3ce', // offered
+              color: color,
               textColor: '#000000'
 
               // color: '#f8e9e7',  // all
@@ -197,7 +219,8 @@ class CalendarScreen extends React.Component {
               time: need.time,
               location: need.parents[0].address,
               specialNotes: need.specialNotes,
-              children: need.parents[0].children
+              children: need.parents[0].children,
+              filterType: filterType
             };
           }
         }
