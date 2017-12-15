@@ -76,7 +76,7 @@ class WelcomeScreenTwo extends Component {
   };
 
   onSlidesCompleteSignup = () => {
-    this.props.navigation.navigate('Login');
+    this.props.navigation.navigate('Signup');
   };
 
   render() {
