@@ -3,14 +3,26 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
-
-import { Provider } from 'react-redux'
+import * as firebase from 'firebase';
+import { Provider } from 'react-redux';
 import Store from './redux/store';
 
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false
   };
+
+  componentWillMount() {
+    var config = {
+      apiKey: 'AIzaSyCIKTiafUSSGZQPw7rCxBrzve7fzSSPob0',
+      authDomain: 'vilijpersonal.firebaseapp.com',
+      databaseURL: 'https://vilijpersonal.firebaseio.com',
+      projectId: 'vilijpersonal',
+      storageBucket: 'vilijpersonal.appspot.com',
+      messagingSenderId: '891487352787'
+    };
+    firebase.initializeApp(config);
+  }
 
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
@@ -24,11 +36,13 @@ export default class App extends React.Component {
     } else {
       return (
         <Provider store={Store}>
-        <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
-          <RootNavigation />
-        </View>
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            {Platform.OS === 'android' && (
+              <View style={styles.statusBarUnderlay} />
+            )}
+            <RootNavigation />
+          </View>
         </Provider>
       );
     }

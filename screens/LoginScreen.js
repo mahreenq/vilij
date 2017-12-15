@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import * as actions from '../redux/modules/login.js';
+import SignupScreen from './SignupScreen.js';
 
 class LoginScreen extends Component {
   componentDidMount() {
@@ -22,17 +23,7 @@ class LoginScreen extends Component {
   }
 
   render() {
-    return (
-      <View>
-        <Text>LoginScreen</Text>
-        <Text>LoginScreen</Text>
-        <Text>LoginScreen</Text>
-        <Text>LoginScreen</Text>
-        <Text>LoginScreen</Text>
-        <Text>LoginScreen</Text>
-        <Text>LoginScreen</Text>
-      </View>
-    );
+    return <SignupScreen />;
   }
 }
 

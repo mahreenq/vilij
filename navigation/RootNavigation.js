@@ -33,12 +33,12 @@ const RootStackNavigator = StackNavigator(
         header: null
       })
     },
-    // Signup: {
-    //   screen: SignupScreen,
-    //   navigationOptions: ({ navigation }) => ({
-    //     header: null
-    //   })
-    // },
+    Signup: {
+      screen: SignupScreen,
+      navigationOptions: ({ navigation }) => ({
+        header: null
+      })
+    },
     // ParentScreen: {
     //   screen: ParentScreen,
     //   navigationOptions: ({ navigation }) => ({
