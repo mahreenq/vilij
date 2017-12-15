@@ -9,13 +9,21 @@ import {
 import Moment from 'moment';
 
 const CalendarDetail = ({ detail, toggleDetail }) => {
+  let detailHeading = '';
+
+  if (detail.filter == 'offered') {
+    detailHeading = 'You offered to help ' + detail.name;
+  } else if (detail.filter == 'receiving') {
+    detailHeading = detail.name + ' offered to help you';
+  } else {
+    detailHeading = 'Your request is pending';
+  }
+
   return (
     <View style={styles.details}>
       <View>
         <View style={styles.detailHeader}>
-          <Text style={styles.detailHeading}>
-            {'You offered to help ' + detail.name}
-          </Text>
+          <Text style={styles.detailHeading}>{detailHeading}</Text>
           <TouchableHighlight
             onPress={() => {
               toggleDetail('');

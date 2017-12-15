@@ -7,33 +7,43 @@ const CalendarList = ({ listDates, toggleDetail }) => {
     <View>
       {Object.keys(listDates)
         .sort()
-        .map(key => (
-          <View key={key} style={styles.calendarEvent}>
-            <TouchableHighlight
-              onPress={() => {
-                toggleDetail(listDates[key].date);
-              }}
-            >
-              <View style={styles.offeredCircle}>
-                <View style={styles.circleText}>
-                  <Text style={styles.dayText}>
-                    {parseInt(listDates[key].date.substr(8, 2))}
-                  </Text>
+        .map(key => {
+          let detailHeading = '';
+
+          if (listDates[key].filter == 'offered') {
+            detailHeading = 'You offered to help ' + listDates[key].name;
+          } else if (listDates[key].filter == 'receiving') {
+            detailHeading = listDates[key].name + ' offered to help you';
+          } else {
+            detailHeading = 'Your request is pending';
+          }
+
+          return (
+            <View key={key} style={styles.calendarEvent}>
+              <TouchableHighlight
+                onPress={() => {
+                  toggleDetail(listDates[key].date);
+                }}
+              >
+                <View style={[styles.eventCircle, listDates[key].circleColor]}>
+                  <View style={styles.circleText}>
+                    <Text style={styles.dayText}>
+                      {parseInt(listDates[key].date.substr(8, 2))}
+                    </Text>
+                  </View>
                 </View>
+              </TouchableHighlight>
+              <View>
+                <Text style={styles.detailText}>{detailHeading}</Text>
+                <Text style={styles.detailText}>
+                  {Moment(listDates[key].date).format('dddd')},{' '}
+                  {listDates[key].time}
+                </Text>
+                <Text style={styles.detailText}>{listDates[key].location}</Text>
               </View>
-            </TouchableHighlight>
-            <View>
-              <Text style={styles.detailText}>
-                You offered to help {listDates[key].name}
-              </Text>
-              <Text style={styles.detailText}>
-                {Moment(listDates[key].date).format('dddd')},{' '}
-                {listDates[key].time}
-              </Text>
-              <Text style={styles.detailText}>{listDates[key].location}</Text>
             </View>
-          </View>
-        ))}
+          );
+        })}
     </View>
   );
 };
@@ -52,9 +62,8 @@ const styles = StyleSheet.create({
     lineHeight: 26,
     color: '#f8e9e7'
   },
-  offeredCircle: {
+  eventCircle: {
     borderRadius: 56 / 2,
-    backgroundColor: '#c3a3ce',
     height: 56,
     width: 56,
     flexDirection: 'row',

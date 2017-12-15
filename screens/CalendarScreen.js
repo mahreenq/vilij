@@ -171,7 +171,7 @@ class CalendarScreen extends React.Component {
 
       // temporary, hard-coded parent ID for testing,
       // to be replaced by parent ID that is actually logged in
-      let parentId = '5a270686a0d3760014197891';
+      let parentId = '5a270686a0d3760014197891'; // Aloysius
 
       let needsData = this.props.needsData.filter(need => {
         return (
@@ -182,45 +182,53 @@ class CalendarScreen extends React.Component {
 
       needsData.map(need => {
         let markedDate = need.date.substr(0, 10); // yyyy-mm-dd
-        let filterType = '';
+        let filter = '';
         let color = '';
 
+        // color: '#f8e9e7',  // all
+        // color: '#bdf3ff',  // receiving
+        // color: '#c3a3ce',  // offered
+
         if (need.parents[0]._id != parentId) {
-          filterType = 'offered';
+          filter = 'offered';
           color = '#c3a3ce';
+          name = need.parents[0].name;
         } else if (Object.keys(need.offered).length > 0) {
-          filterType = 'received';
+          filter = 'receiving';
           color = '#bdf3ff';
+          name = need.offered[0].name;
         } else {
-          filterType = 'all';
+          filter = 'all';
           color = '#f8e9e7';
+          name = need.parents[0].name;
         }
 
+        let circleColor = {
+          backgroundColor: color
+        };
+
         if (!markedDates.hasOwnProperty(markedDate)) {
-          if (this.props.filter == 'all' || this.props.filter == 'offered') {
+          if (this.props.filter == filter || this.props.filter == 'all') {
             markedDates[markedDate] = {
               startingDay: true,
               endingDay: true,
               color: color,
               textColor: '#000000'
-
-              // color: '#f8e9e7',  // all
-              // color: '#bdf3ff',  // receiving
-              // color: '#c3a3ce',  // offered
             };
           }
         }
 
         if (markedDate.substr(0, 7) == currentDate.substr(0, 7)) {
-          if (this.props.filter == 'all' || this.props.filter == 'offered') {
+          if (this.props.filter == filter || this.props.filter == 'all') {
             listDates[markedDate] = {
-              name: need.parents[0].name,
+              name: name,
               date: need.date.substr(0, 10),
               time: need.time,
               location: need.parents[0].address,
               specialNotes: need.specialNotes,
               children: need.parents[0].children,
-              filterType: filterType
+              filter: filter,
+              circleColor: circleColor
             };
           }
         }
