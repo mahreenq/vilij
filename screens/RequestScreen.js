@@ -1,18 +1,7 @@
 import React from 'react';
-import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  ActivityIndicator
-} from 'react-native';
-import { WebBrowser } from 'expo';
-import { MonoText } from '../components/StyledText';
+import { Platform, StyleSheet, View, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import { fetchRequests } from '../redux/modules/requests';
+import { fetchRequests, offerHelp } from '../redux/modules/requests';
 import SingleRequest from '../components/SingleRequest/SingleRequest';
 
 class RequestScreen extends React.Component {
@@ -24,30 +13,46 @@ class RequestScreen extends React.Component {
       height: 50,
       top: 0,
       left: 0,
-      right: 0,
+      right: 0
     },
     headerTintColor: '#fff'
   };
-
-
 
   componentDidMount() {
     this.props.dispatch(fetchRequests());
   }
 
-  render() {
+  offerButton(needId, requestName) {
+    // temporary, hard-coded parent ID for testing,
+    // to be replaced by parent ID that is actually logged in
+    let parentId = '5a270686a0d3760014197891'; // Aloysius
 
-    const { state } = this.props.navigation;
+    this.props.dispatch(offerHelp(needId, parentId, requestName));
+    this.props.dispatch(fetchRequests());
+  }
+
+  render() {
+    // const { state } = this.props.navigation;
+    const { state, goBack } = this.props.navigation;
     const request = state.params.request.item;
+    // console.log(this.props.navigation);
 
     //console.log(state.params.request.item.specialNotes);
-    return this.props.isLoading ? (
-      <ActivityIndicator animating={true} size="small" color="black" />
-    ) : (
-      <SingleRequest request={request} isLoading={this.props.isLoading} />
-    );
-
-
+    if (this.props.isLoading) {
+      return (
+        <View style={styles.loading}>
+          <ActivityIndicator animating={true} size="small" color="black" />
+        </View>
+      );
+    } else {
+      return (
+        <SingleRequest
+          request={request}
+          offerButton={this.offerButton.bind(this)}
+          goBack={goBack}
+        />
+      );
+    }
   }
 }
 
@@ -59,8 +64,8 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps)(RequestScreen);
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff'
+  loading: {
+    justifyContent: 'center',
+    height: '100%'
   }
 });

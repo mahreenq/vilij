@@ -1,23 +1,20 @@
 import React from 'react';
 import {
-  Image,
   FlatList,
   Platform,
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
+  TouchableHighlight,
   View,
   ActivityIndicator,
-  Dimensions,
   ImageBackground
 } from 'react-native';
-import { WebBrowser } from 'expo';
-import { MonoText } from '../components/StyledText';
 import { connect } from 'react-redux';
-import { fetchRequests } from '../redux/modules/requests';
-import { LinearGradient } from 'expo';
+import { fetchRequests, updateModal } from '../redux/modules/requests';
+import { fetchNeeds } from '../redux/modules/calendar';
 import { Gravatar, GravatarApi } from 'react-native-gravatar';
+import Modal from 'react-native-modal';
 import Moment from 'react-moment';
 
 class HomeScreen extends React.Component {
@@ -29,8 +26,18 @@ class HomeScreen extends React.Component {
     this.props.dispatch(fetchRequests());
   }
 
+  toggleModal() {
+    this.props.dispatch(updateModal(false));
+    this.props.dispatch(fetchRequests());
+    this.props.dispatch(fetchNeeds());
+  }
+
   render() {
     const { navigate } = this.props.navigation;
+
+    let requestsData = this.props.requestsData.filter(request => {
+      return Object.keys(request.offered).length == 0;
+    });
 
     return this.props.isLoading ? (
       <ActivityIndicator animating={true} size="small" color="black" />
@@ -38,21 +45,21 @@ class HomeScreen extends React.Component {
       <View style={styles.mainView}>
         <ImageBackground
           source={require('../assets/images/gradientbg.png')}
-          style={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}
+          style={styles.background}
         >
-          <TouchableOpacity
-            style={styles.offerHelpButton}
+          <View style={styles.postButton}>
+            <TouchableHighlight
             // onPress={() => navigate('HomeScreen')}
-            underlayColor="#fff"
-          >
-            <View>
-              <Text style={styles.buttonText}>Post a Need</Text>
-            </View>
-          </TouchableOpacity>
+            >
+              <View>
+                <Text style={styles.postText}>Post a Need</Text>
+              </View>
+            </TouchableHighlight>
+          </View>
 
           <ScrollView>
             <FlatList
-              data={this.props.requestsData}
+              data={requestsData}
               renderItem={({ item }) => (
                 <View style={styles.requestsList}>
                   <View style={{ flexDirection: 'row' }}>
@@ -96,11 +103,27 @@ class HomeScreen extends React.Component {
                   </View>
                 </View>
               )}
-              // keyExtractor={item => item.parents[0].name}   />
               keyExtractor={item => item._id}
             />
           </ScrollView>
         </ImageBackground>
+
+        <Modal isVisible={this.props.modalVisible}>
+          <View style={styles.modal}>
+            <Text style={styles.modalHeading}>
+              You offered to help {this.props.requestName}!
+            </Text>
+            <View style={styles.doneButton}>
+              <TouchableHighlight
+                onPress={() => {
+                  this.toggleModal();
+                }}
+              >
+                <Text style={styles.doneText}>Done</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
       </View>
     );
   }
@@ -108,37 +131,23 @@ class HomeScreen extends React.Component {
 
 const mapStateToProps = state => ({
   isLoading: state.requests.isLoading,
-  requestsData: state.requests.requestsData
+  requestsData: state.requests.requestsData,
+  modalVisible: state.requests.modalVisible,
+  requestName: state.requests.requestName
 });
 
 export default connect(mapStateToProps)(HomeScreen);
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
-const SCREEN_HEIGHT = Dimensions.get('window').height;
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff'
-  },
-  mainContent: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: 50
-  },
   mainView: {
-    height: SCREEN_HEIGHT,
+    flex: 1,
     justifyContent: 'center',
-    flex: 1
+    alignItems: 'center'
   },
-  title: {
-    fontSize: 30,
-    color: 'white',
-    backgroundColor: 'transparent',
-    textAlign: 'center',
-    marginBottom: 16,
-    paddingTop: 15
+  background: {
+    width: '100%',
+    height: '100%',
+    alignItems: 'center'
   },
   name: {
     fontSize: 20,
@@ -158,7 +167,7 @@ const styles = StyleSheet.create({
   },
   requestsList: {
     backgroundColor: 'rgba(248, 233, 231, 0.5)',
-    width: SCREEN_WIDTH * 0.88,
+    width: '90%',
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
@@ -176,36 +185,43 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderRadius: 30
   },
-
-  flexOne: {
-    flex: 1
-  },
-  offerHelpButton: {
-    marginRight: 40,
-    marginLeft: 40,
+  postButton: {
+    borderRadius: 50,
+    alignItems: 'center',
     marginTop: 125,
     marginBottom: 30,
-    paddingTop: 10,
-    paddingBottom: 15,
-    backgroundColor: '#422B4A',
-    borderRadius: 30,
-    height: 40,
-    width: SCREEN_WIDTH * 0.7
+    backgroundColor: '#474973',
+    width: '80%'
   },
-  buttonText: {
+  postText: {
     color: '#F8E9E7',
-    textAlign: 'center',
     fontSize: 20,
-    borderRadius: 20,
-    backgroundColor: 'transparent'
+    paddingTop: '4%',
+    paddingBottom: '4%'
+  },
+  modal: {
+    borderRadius: 10,
+    backgroundColor: '#f8e9e7',
+    justifyContent: 'space-around',
+    alignItems: 'center'
+  },
+  modalHeading: {
+    fontSize: 20,
+    color: '#474973',
+    marginTop: '10%'
+  },
+  doneButton: {
+    borderRadius: 50,
+    alignItems: 'center',
+    marginTop: '10%',
+    marginBottom: '10%',
+    backgroundColor: '#474973',
+    width: '80%'
+  },
+  doneText: {
+    fontSize: 20,
+    color: '#f8e9e7',
+    paddingTop: '4%',
+    paddingBottom: '4%'
   }
-
-  // <LinearGradient
-  // style={[
-  //   styles.mainContent,
-  // ]}
-  // colors={['#474973', '#ED808C']}
-  // start={{ x: 0, y: 0.1 }}
-  // end={{ x: 0.1, y: 1 }}
-  // >
 });
