@@ -16,6 +16,9 @@ import { fetchNeeds } from '../redux/modules/calendar';
 import { Gravatar, GravatarApi } from 'react-native-gravatar';
 import Modal from 'react-native-modal';
 import Moment from 'react-moment';
+import Expo, { SQLite } from 'expo';
+
+const db = SQLite.openDatabase('profile.db');
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -23,7 +26,28 @@ class HomeScreen extends React.Component {
   };
 
   componentDidMount() {
+    db.transaction(tx => {
+      tx.executeSql(
+        'create table if not exists items (id integer primary key not null, done int, value text);'
+      );
+    });
+
+    // console.log(Expo.FileSystem.getInfoAsync('SQLite/profile.db'));
+
     this.props.dispatch(fetchRequests());
+  }
+
+  add(text) {
+    db.transaction(
+      tx => {
+        tx.executeSql('insert into items (done, value) values (0, ?)', [text]);
+        tx.executeSql('select * from items', [], (_, { rows }) =>
+          console.log(JSON.stringify(rows))
+        );
+      },
+      null,
+      null
+    );
   }
 
   toggleModal() {
@@ -49,7 +73,10 @@ class HomeScreen extends React.Component {
         >
           <View style={styles.postButton}>
             <TouchableHighlight
-            // onPress={() => navigate('HomeScreen')}
+              // onPress={() => navigate('HomeScreen')}
+              onPress={() => {
+                this.add('Item');
+              }}
             >
               <View>
                 <Text style={styles.postText}>Post a Need</Text>
