@@ -8,7 +8,8 @@ import {
   TouchableHighlight,
   View,
   ActivityIndicator,
-  ImageBackground
+  ImageBackground,
+  Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchRequests, updateModal } from '../redux/modules/requests';
@@ -47,12 +48,23 @@ class HomeScreen extends React.Component {
           source={require('../assets/images/gradientbg.png')}
           style={styles.background}
         >
+
+        <Text 
+        style={styles.viewProfile}
+        onPress={() =>
+          navigate('ProfileScreen')
+        }>
+         View Profile </Text>
           <View style={styles.postButton}>
             <TouchableHighlight
             // onPress={() => navigate('HomeScreen')}
             >
               <View>
-                <Text style={styles.postText}>Post a Need</Text>
+                <Text 
+                onPress={() =>
+                  navigate('PostNeedScreen')
+                }
+                style={styles.postText}>Post a Need</Text>
               </View>
             </TouchableHighlight>
           </View>
@@ -147,7 +159,8 @@ const styles = StyleSheet.create({
   background: {
     width: '100%',
     height: '100%',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 20
   },
   name: {
     fontSize: 20,
@@ -188,8 +201,8 @@ const styles = StyleSheet.create({
   postButton: {
     borderRadius: 50,
     alignItems: 'center',
-    marginTop: 125,
-    marginBottom: 30,
+    marginTop: 80,
+    marginBottom: 20,
     backgroundColor: '#474973',
     width: '80%'
   },
@@ -223,5 +236,11 @@ const styles = StyleSheet.create({
     color: '#f8e9e7',
     paddingTop: '4%',
     paddingBottom: '4%'
+  },
+  viewProfile:{
+    textAlign: 'left',
+    fontSize: 20,
+    color: '#422B4A',
+    paddingTop: 10
   }
 });

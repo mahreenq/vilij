@@ -12,6 +12,8 @@ import SignupScreen from '../screens/SignupScreen';
 
 import ParentScreen from '../screens/ParentScreen';
 import RequestScreen from '../screens/RequestScreen';
+import PostNeedScreen from '../screens/PostNeedScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 const RootStackNavigator = StackNavigator(
   {
@@ -54,7 +56,14 @@ const RootStackNavigator = StackNavigator(
     },
     RequestScreen: {
       screen: RequestScreen
+    },
+    PostNeedScreen: {
+      screen: PostNeedScreen
+    },
+    ProfileScreen : {
+      screen: ProfileScreen
     }
+
   },
   {
     lazy: true,
