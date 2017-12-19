@@ -6,7 +6,7 @@ import SignupScreen from './SignupScreen.js';
 
 class LoginScreen extends Component {
   componentDidMount() {
-    this.props.facebookLogin();
+    // this.props.facebookLogin();
     //AsyncStorage.removeItem('fb_token');
     this.onLoginComplete(this.props);
   }

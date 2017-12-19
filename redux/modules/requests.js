@@ -79,6 +79,30 @@ export const offerHelp = (needId, parentId, requestName) => dispatch => {
     });
 };
 
+export const postNeed = (needId, parentId, requestName) => dispatch => {
+  dispatch(getRequestsLoading());
+
+  return fetch(`${requestsURL}/offered/${needId}`, {
+    method: 'PATCH',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      offered: parentId
+    })
+  })
+    .then(requestsData => {
+      // console.log(requestsData);
+      dispatch(setRequestName(requestName));
+      dispatch(setModal(true));
+    })
+    .catch(error => {
+      console.log(error);
+      dispatch(getRequestsError(error));
+    });
+};
+
 export const updateModal = visible => dispatch => {
   dispatch(setModal(visible));
 };
