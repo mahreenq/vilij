@@ -18,6 +18,7 @@ import { Gravatar, GravatarApi } from 'react-native-gravatar';
 import Modal from 'react-native-modal';
 import Moment from 'react-moment';
 
+
 class ProfileScreen extends React.Component {
   static navigationOptions = {
     title: '',
@@ -35,6 +36,7 @@ class ProfileScreen extends React.Component {
 
  
   render() {
+    const { navigate } = this.props.navigation;
 
     return this.props.isLoading ? (
       <ActivityIndicator animating={true} size="small" color="black" />
@@ -45,7 +47,55 @@ class ProfileScreen extends React.Component {
           style={styles.background}
         >
 
-        <Text style={styles.viewProfile}> PROFILE SCREEN </Text>
+
+        <View style={{flexDirection:'row', alignItems:'center', marginTop:150, justifyContent:'flex-start', width: '90%'}}>
+            <View style={{width:'20%'}} >
+                                <Gravatar options={{email: "noemail@noemail.com",}}
+                                    style={styles.roundedProfileImage} />
+            </View>
+          <Text style={styles.name} > Logged in user's Name </Text>
+        </View>
+
+        <View style={{flexDirection:'row', alignItems:'center', marginTop:10, justifyContent:'space-between', width: '90%'}}>
+          <Text style={styles.text}> 
+            Logged in user's description. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor in
+          </Text>
+          <Text 
+          onPress={() =>
+            navigate('EditProfileScreen')
+          }
+          style={styles.edit}>
+           Edit </Text>
+        </View>
+
+        <View style={{flexDirection:'row', alignItems:'center', marginTop:10, justifyContent:'space-between', width: '90%', borderTopWidth:1, borderBottomWidth:1, borderColor: "#fff"}}>
+          <Text style={styles.text}> Map through logged in user's children here. </Text>
+          <Text onPress={() =>
+            navigate('EditChildScreen')
+          }
+          style={styles.edit}> 
+            Edit  </Text>
+        </View>
+
+        <View style={{flexDirection:'row', alignItems:'center', marginTop:10, justifyContent:'space-between', width: '90%'}}>
+          <Text style={styles.text}> 1234 Abcde Street </Text>
+          <Text
+           onPress={() =>
+            navigate('EditProfileScreen')
+          } 
+          style={styles.edit}> 
+            Edit 
+          </Text>
+        </View>
+
+        <View style={{ flexDirection: 'row', paddingTop: 50, width:'90%', justifyContent: 'space-around' }}>
+                    <Text style={styles.helped}>
+                      # Sits Offered
+                    </Text>
+                    <Text style={styles.helped}>
+                    # Sits Received
+                    </Text>
+                  </View>
       
   
         </ImageBackground>
@@ -70,35 +120,7 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center'
   },
-  name: {
-    fontSize: 20,
-    color: '#422B4A',
-    backgroundColor: 'transparent',
-    paddingBottom: 5
-  },
-  date: {
-    fontSize: 15,
-    color: '#422B4A',
-    backgroundColor: 'transparent'
-  },
-  helped: {
-    fontSize: 14,
-    color: '#422B4A',
-    backgroundColor: 'transparent'
-  },
-  requestsList: {
-    backgroundColor: 'rgba(248, 233, 231, 0.5)',
-    width: '90%',
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: 15,
-    margin: 5,
-    marginLeft: 20,
-    borderRadius: 15,
-    padding: 20
-  },
+
   roundedProfileImage: {
     width: 60,
     height: 60,
@@ -106,49 +128,30 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderRadius: 30
   },
-  postButton: {
-    borderRadius: 50,
-    alignItems: 'center',
-    marginTop: 125,
-    marginBottom: 30,
-    backgroundColor: '#474973',
-    width: '80%'
-  },
-  postText: {
-    color: '#F8E9E7',
-    fontSize: 20,
-    paddingTop: '4%',
-    paddingBottom: '4%'
-  },
-  modal: {
-    borderRadius: 10,
-    backgroundColor: '#f8e9e7',
-    justifyContent: 'space-around',
-    alignItems: 'center'
-  },
-  modalHeading: {
-    fontSize: 20,
-    color: '#474973',
-    marginTop: '10%'
-  },
-  doneButton: {
-    borderRadius: 50,
-    alignItems: 'center',
-    marginTop: '10%',
-    marginBottom: '10%',
-    backgroundColor: '#474973',
-    width: '80%'
-  },
-  doneText: {
-    fontSize: 20,
+  name: {
+    fontSize: 24,
     color: '#f8e9e7',
-    paddingTop: '4%',
-    paddingBottom: '4%'
+    backgroundColor: 'transparent'
   },
-  viewProfile:{
-    textAlign: 'left',
-    fontSize: 20,
-    color: '#422B4A',
-    paddingTop: 10
+  helped: {
+    fontSize: 14,
+    color: '#fff',
+    backgroundColor: 'transparent'
+  },
+  text: {
+    fontSize: 14,
+    color: '#f8e9e7',
+    backgroundColor: 'transparent',
+    width: '80%',
+    paddingTop: 20,
+    paddingBottom: 20
+  },
+  edit: {
+    fontSize: 14,
+    color: '#f8e9e7',
+    backgroundColor: 'transparent',
+    width: '20%',
+    
   }
+
 });

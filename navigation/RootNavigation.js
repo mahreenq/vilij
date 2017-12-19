@@ -14,6 +14,8 @@ import ParentScreen from '../screens/ParentScreen';
 import RequestScreen from '../screens/RequestScreen';
 import PostNeedScreen from '../screens/PostNeedScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import EditProfileScreen from '../screens/EditProfileScreen';
+import EditChildScreen from '../screens/EditChildScreen';
 
 const RootStackNavigator = StackNavigator(
   {
@@ -62,6 +64,12 @@ const RootStackNavigator = StackNavigator(
     },
     ProfileScreen : {
       screen: ProfileScreen
+    },
+    EditProfileScreen:{
+      screen: EditProfileScreen
+    },
+    EditChildScreen:{
+      screen: EditChildScreen
     }
 
   },

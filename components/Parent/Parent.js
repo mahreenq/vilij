@@ -8,7 +8,8 @@ import {
   Image,
   ScrollView,
   ActivityIndicator,
-  Dimensions
+  Dimensions,
+  TouchableHighlight
 } from 'react-native';
 import { LinearGradient } from 'expo';
 import { Gravatar, GravatarApi } from 'react-native-gravatar';
@@ -42,7 +43,7 @@ const Parent = ({ parent }) => {
             <View>
               <Text style={styles.purpleFont}> {parent.description}</Text>
             </View>
-                    <View >
+                    <View style={styles.allChildrenContainer} >
                       {parent.children.map((child)=>{
                               return ( 
                                 <View key= {child._id} style={styles.childContainer}>
@@ -67,6 +68,19 @@ const Parent = ({ parent }) => {
                       <Text style= {styles.help}> {parent.whoYouHelped.length} Sits Offered </Text>
                       <Text style= {styles.help}> {parent.whoHelpedYou.length} Sits Received</Text>
                     </View>
+
+                    <View style={styles.postButton}>
+                      <TouchableHighlight>
+                        <View>
+                          <Text 
+                          // onPress={() =>
+                          //   navigate('ChatScreen')
+                          // }
+                          style={styles.postText}>Start a Chat</Text>
+                        </View>
+                      </TouchableHighlight>
+                    </View>
+
                   </View>
               </LinearGradient>
              </ScrollView>
@@ -115,7 +129,8 @@ const styles = StyleSheet.create({
     fontSize: 22,
     backgroundColor: 'transparent',
     marginBottom: 5,
-    color: '#422B4A'
+    color: '#422B4A',
+    
   },
   description: {
     fontSize: 15,
@@ -140,6 +155,45 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'white',
     borderRadius: 35
+  },
+  childImg:{
+    width: 60,
+    height: 60
+  },
+  childContainer:{
+    flexDirection: 'column',
+    alignItems:'center'
+  },
+  allChildrenContainer:{
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
+    borderColor: '#fff',
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginTop: 30,
+    marginBottom: 30,
+    width: SCREEN_WIDTH*0.7,
+  },
+  help:{
+    fontSize: 18,
+    backgroundColor: 'transparent',
+    marginTop: 15,
+    marginBottom: 5,
+    color: '#422B4A',
+  },
+  postButton: {
+    borderRadius: 20,
+    alignItems: 'center',
+    marginTop: 30,
+    marginBottom: 30,
+    backgroundColor: '#474973',
+    width: SCREEN_WIDTH*0.6
+  },
+  postText: {
+    color: '#F8E9E7',
+    fontSize: 20,
+    paddingTop: '4%',
+    paddingBottom: '4%'
   },
       
     
