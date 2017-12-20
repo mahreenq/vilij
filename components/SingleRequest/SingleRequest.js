@@ -75,7 +75,7 @@ const SingleRequest = ({ request, offerButton, goBack }) => {
                 style={styles.purpleFont}
                 element={Text}
               >
-                {request.date}
+                {request.date.substr(0, 10)}
               </Moment>
             </View>
 
