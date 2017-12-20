@@ -16,6 +16,7 @@ import PostNeedScreen from '../screens/PostNeedScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
 import EditChildScreen from '../screens/EditChildScreen';
+import SetupProfileScreen from '../screens/SetupProfileScreen';
 
 const RootStackNavigator = StackNavigator(
   {
@@ -70,6 +71,9 @@ const RootStackNavigator = StackNavigator(
     },
     EditChildScreen:{
       screen: EditChildScreen
+    },
+    SetupProfileScreen:{
+      screen: SetupProfileScreen
     }
 
   },

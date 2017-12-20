@@ -6,7 +6,7 @@ import SignupScreen from './SignupScreen.js';
 
 class LoginScreen extends Component {
   componentDidMount() {
-    // this.props.facebookLogin();
+    this.props.facebookLogin();
     //AsyncStorage.removeItem('fb_token');
     this.onLoginComplete(this.props);
   }
@@ -17,8 +17,10 @@ class LoginScreen extends Component {
   }
 
   onLoginComplete(props) {
+
+    // props.token? this.props.navigation.navigate('Home') : this.props.navigation.navigate('EditProfileScreen');
     if (props.token) {
-      this.props.navigation.navigate('Home');
+      this.props.navigation.navigate('SetupProfileScreen');
     }
   }
 
