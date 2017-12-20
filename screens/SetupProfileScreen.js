@@ -92,7 +92,7 @@ class SetupProfileScreen extends React.Component {
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-export default EditProfileScreen;
+export default SetupProfileScreen;
 
 const styles = StyleSheet.create({
   mainView: {
