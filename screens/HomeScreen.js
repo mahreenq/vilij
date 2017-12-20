@@ -9,7 +9,7 @@ import {
   View,
   ActivityIndicator,
   ImageBackground,
-  Dimensions,
+  Dimensions
 } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchRequests, updateModal } from '../redux/modules/requests';
@@ -52,7 +52,7 @@ class HomeScreen extends React.Component {
   }
 
   toggleModal() {
-    this.props.dispatch(updateModal(false));
+    this.props.dispatch(updateModal(0));
     this.props.dispatch(fetchRequests());
     this.props.dispatch(fetchNeeds());
   }
@@ -72,13 +72,12 @@ class HomeScreen extends React.Component {
           source={require('../assets/images/gradientbg.png')}
           style={styles.background}
         >
-
-        <Text 
-        style={styles.viewProfile}
-        onPress={() =>
-          navigate('ProfileScreen')
-        }>
-         View Profile </Text>
+          <Text
+            style={styles.viewProfile}
+            onPress={() => navigate('ProfileScreen')}
+          >
+            View Profile{' '}
+          </Text>
           <View style={styles.postButton}>
             <TouchableHighlight
               // onPress={() => navigate('HomeScreen')}
@@ -87,11 +86,12 @@ class HomeScreen extends React.Component {
               }}
             >
               <View>
-                <Text 
-                onPress={() =>
-                  navigate('PostNeedScreen')
-                }
-                style={styles.postText}>Post a Need</Text>
+                <Text
+                  onPress={() => navigate('PostNeedScreen')}
+                  style={styles.postText}
+                >
+                  Post a Need
+                </Text>
               </View>
             </TouchableHighlight>
           </View>
@@ -123,7 +123,7 @@ class HomeScreen extends React.Component {
                         style={styles.date}
                         element={Text}
                       >
-                        {item.date}
+                        {item.date.substr(0, 10)}
                       </Moment>
 
                       <Text style={styles.date}>{item.time} </Text>
@@ -147,10 +147,31 @@ class HomeScreen extends React.Component {
           </ScrollView>
         </ImageBackground>
 
-        <Modal isVisible={this.props.modalVisible}>
+        <Modal isVisible={this.props.modal == 1}>
           <View style={styles.modal}>
             <Text style={styles.modalHeading}>
               You offered to help {this.props.requestName}!
+            </Text>
+            <View style={styles.doneButton}>
+              <TouchableHighlight
+                onPress={() => {
+                  this.toggleModal();
+                }}
+              >
+                <Text style={styles.doneText}>Done</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal isVisible={this.props.modal == 2}>
+          <View style={styles.modal}>
+            <Text style={styles.modalHeading}>Post Submitted</Text>
+            <Text style={styles.modalMessage}>
+              You'll hear from us when a fellow vilijer accepts your request.
+            </Text>
+            <Text style={styles.modalMessage}>
+              Check your calendar to view your submitted requests.
             </Text>
             <View style={styles.doneButton}>
               <TouchableHighlight
@@ -171,7 +192,7 @@ class HomeScreen extends React.Component {
 const mapStateToProps = state => ({
   isLoading: state.requests.isLoading,
   requestsData: state.requests.requestsData,
-  modalVisible: state.requests.modalVisible,
+  modal: state.requests.modal,
   requestName: state.requests.requestName
 });
 
@@ -246,14 +267,21 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   modalHeading: {
-    fontSize: 20,
+    fontSize: 22,
     color: '#474973',
     marginTop: '10%'
+  },
+  modalMessage: {
+    fontSize: 18,
+    color: '#474973',
+    marginTop: '5%',
+    width: '70%',
+    textAlign: 'center'
   },
   doneButton: {
     borderRadius: 50,
     alignItems: 'center',
-    marginTop: '10%',
+    marginTop: '15%',
     marginBottom: '10%',
     backgroundColor: '#474973',
     width: '80%'
@@ -264,7 +292,7 @@ const styles = StyleSheet.create({
     paddingTop: '4%',
     paddingBottom: '4%'
   },
-  viewProfile:{
+  viewProfile: {
     textAlign: 'left',
     fontSize: 20,
     color: '#422B4A',

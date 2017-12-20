@@ -18,6 +18,7 @@ import {
   FormInput,
   FormValidationMessage
 } from 'react-native-elements';
+import { connect } from 'react-redux';
 import { postNeed } from '../redux/modules/requests';
 
 class PostNeedScreen extends React.Component {
@@ -48,16 +49,27 @@ class PostNeedScreen extends React.Component {
     // to be replaced by parent ID that is actually logged in
     let parentId = '5a270686a0d3760014197891'; // Aloysius
 
-    console.log(this.state.month);
+    let need = {
+      date: `${this.state.year}-${this.state.month}-${
+        this.state.day
+      }T00:00:00.000Z`,
+      time: `${this.state.fromTime} to ${this.state.toTime}`,
+      specialNotes: this.state.notes,
+      parents: [{ _id: parentId }]
+    };
 
-    // this.props.dispatch(postNeed(needId, parentId, requestName));
-    // this.props.dispatch(fetchRequests());
+    this.props.dispatch(postNeed(need));
+
+    const { goBack } = this.props.navigation;
+    goBack();
   }
 
   render() {
-    return this.props.isLoading ? (
-      <ActivityIndicator animating={true} size="small" color="black" />
-    ) : (
+    // return this.props.isLoading ? (
+    //   <ActivityIndicator animating={true} size="small" color="black" />
+    // ) : (
+
+    return (
       <View style={styles.mainView}>
         <ImageBackground
           source={require('../assets/images/gradientbg.png')}
@@ -163,10 +175,14 @@ class PostNeedScreen extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  isLoading: state.requests.isLoading
+});
+
+export default connect(mapStateToProps)(PostNeedScreen);
+
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
-
-export default PostNeedScreen;
 
 const styles = StyleSheet.create({
   mainView: {
@@ -245,6 +261,31 @@ const styles = StyleSheet.create({
   formSubheadings: {
     color: '#474973',
     marginTop: 15
+  },
+  modal: {
+    borderRadius: 10,
+    backgroundColor: '#f8e9e7',
+    justifyContent: 'space-around',
+    alignItems: 'center'
+  },
+  modalHeading: {
+    fontSize: 20,
+    color: '#474973',
+    marginTop: '10%'
+  },
+  doneButton: {
+    borderRadius: 50,
+    alignItems: 'center',
+    marginTop: '10%',
+    marginBottom: '10%',
+    backgroundColor: '#474973',
+    width: '80%'
+  },
+  doneText: {
+    fontSize: 20,
+    color: '#f8e9e7',
+    paddingTop: '4%',
+    paddingBottom: '4%'
   }
 });
 

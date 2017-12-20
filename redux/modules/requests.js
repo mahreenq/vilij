@@ -7,12 +7,19 @@ const GET_REQUESTS_ERROR = 'GET_REQUESTS_ERROR';
 const GET_REQUESTS = 'GET_REQUESTS';
 const SET_MODAL = 'SET_MODAL';
 const SET_REQUEST_NAME = 'SET_REQUEST_NAME';
+const RESET_REQUESTS_LOADING = 'RESET_REQUESTS_LOADING';
 
 // dispatch actions, optionally with payloads
 
 const getRequestsLoading = () => {
   return {
     type: GET_REQUESTS_LOADING
+  };
+};
+
+const resetRequestsLoading = () => {
+  return {
+    type: RESET_REQUESTS_LOADING
   };
 };
 
@@ -30,10 +37,10 @@ const getRequests = requestsData => {
   };
 };
 
-const setModal = visible => {
+const setModal = mode => {
   return {
     type: SET_MODAL,
-    payload: visible
+    payload: mode
   };
 };
 
@@ -71,7 +78,7 @@ export const offerHelp = (needId, parentId, requestName) => dispatch => {
     .then(requestsData => {
       // console.log(requestsData);
       dispatch(setRequestName(requestName));
-      dispatch(setModal(true));
+      dispatch(setModal(1));
     })
     .catch(error => {
       console.log(error);
@@ -79,23 +86,21 @@ export const offerHelp = (needId, parentId, requestName) => dispatch => {
     });
 };
 
-export const postNeed = (needId, parentId, requestName) => dispatch => {
+export const postNeed = need => dispatch => {
   dispatch(getRequestsLoading());
 
-  return fetch(`${requestsURL}/offered/${needId}`, {
-    method: 'PATCH',
+  return fetch(`${requestsURL}`, {
+    method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({
-      offered: parentId
-    })
+    body: JSON.stringify(need)
   })
     .then(requestsData => {
-      // console.log(requestsData);
-      dispatch(setRequestName(requestName));
-      dispatch(setModal(true));
+      dispatch(resetRequestsLoading());
+      fetchRequests();
+      dispatch(setModal(2));
     })
     .catch(error => {
       console.log(error);
@@ -103,8 +108,8 @@ export const postNeed = (needId, parentId, requestName) => dispatch => {
     });
 };
 
-export const updateModal = visible => dispatch => {
-  dispatch(setModal(visible));
+export const updateModal = mode => dispatch => {
+  dispatch(setModal(mode));
 };
 
 // reducer that handles our actions and manipulates our state in the store
@@ -113,7 +118,7 @@ export default function reducer(
   state = {
     isLoading: false,
     requestsData: [],
-    modalVisible: false,
+    modal: 0,
     requestName: ''
   },
   action
@@ -121,6 +126,9 @@ export default function reducer(
   switch (action.type) {
     case GET_REQUESTS_LOADING: {
       return { ...state, isLoading: true, error: '' };
+    }
+    case RESET_REQUESTS_LOADING: {
+      return { ...state, isLoading: false, error: '' };
     }
     case GET_REQUESTS_ERROR: {
       return { ...state, isLoading: false, error: action.payload };
@@ -136,7 +144,7 @@ export default function reducer(
     case SET_MODAL: {
       return {
         ...state,
-        modalVisible: action.payload
+        modal: action.payload
       };
     }
     case SET_REQUEST_NAME: {
