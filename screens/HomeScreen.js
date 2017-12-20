@@ -39,12 +39,26 @@ class HomeScreen extends React.Component {
   }
 
   add(text) {
+    let user = '';
+
     db.transaction(
       tx => {
-        tx.executeSql('insert into items (done, value) values (0, ?)', [text]);
-        tx.executeSql('select * from items', [], (_, { rows }) =>
-          console.log(JSON.stringify(rows))
+        tx.executeSql('delete from items');
+
+        tx.executeSql(
+          `select * from items where value = '${text}'`,
+          [],
+          (_, { rows }) => {
+            console.log('count', rows._array.length);
+          }
         );
+        tx.executeSql('insert into items (done, value) values (0, ?)', [text]);
+
+        tx.executeSql('select * from items', [], (_, { rows }) => {
+          console.log(JSON.stringify(rows));
+          user = rows._array[0].value;
+          console.log('user', user);
+        });
       },
       null,
       null
@@ -80,18 +94,13 @@ class HomeScreen extends React.Component {
           </Text>
           <View style={styles.postButton}>
             <TouchableHighlight
-              // onPress={() => navigate('HomeScreen')}
               onPress={() => {
                 this.add('Item');
+                navigate('PostNeedScreen');
               }}
             >
               <View>
-                <Text
-                  onPress={() => navigate('PostNeedScreen')}
-                  style={styles.postText}
-                >
-                  Post a Need
-                </Text>
+                <Text style={styles.postText}>Post a Need</Text>
               </View>
             </TouchableHighlight>
           </View>
