@@ -3,7 +3,7 @@ import { FlatList, Platform, ScrollView, StyleSheet, Text, TouchableHighlight, V
 import Moment from 'react-moment';
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 
-class EditProfileScreen extends React.Component {
+class SetupProfileScreen extends React.Component {
   static navigationOptions = {
     title: '',
     headerStyle: {
@@ -31,7 +31,7 @@ class EditProfileScreen extends React.Component {
 
         <ScrollView>
         <View style={styles.mainContent}>
-              <Text style= {styles.formHeading}> Edit Your Profile </Text>
+              <Text style= {styles.formHeading}> Set Up Your Profile </Text>
 
               <View style={styles.form}>
 
