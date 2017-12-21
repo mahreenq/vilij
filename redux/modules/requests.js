@@ -76,7 +76,6 @@ export const offerHelp = (needId, parentId, requestName) => dispatch => {
     })
   })
     .then(requestsData => {
-      // console.log(requestsData);
       dispatch(setRequestName(requestName));
       dispatch(setModal(1));
     })

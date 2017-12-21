@@ -45,9 +45,7 @@ class PostNeedScreen extends React.Component {
   };
 
   postButton() {
-    // temporary, hard-coded parent ID for testing,
-    // to be replaced by parent ID that is actually logged in
-    let parentId = '5a270686a0d3760014197891'; // Aloysius
+    let parentId = this.props.parentId;
 
     let need = {
       date: `${this.state.year}-${this.state.month}-${
@@ -176,7 +174,8 @@ class PostNeedScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  isLoading: state.requests.isLoading
+  isLoading: state.requests.isLoading,
+  parentId: state.parents.parentId
 });
 
 export default connect(mapStateToProps)(PostNeedScreen);
