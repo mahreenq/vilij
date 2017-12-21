@@ -14,6 +14,7 @@ import {
 import { connect } from 'react-redux';
 import { fetchRequests, updateModal } from '../redux/modules/requests';
 import { fetchNeeds } from '../redux/modules/calendar';
+import { updateParentId } from '../redux/modules/parents';
 import { Gravatar, GravatarApi } from 'react-native-gravatar';
 import Modal from 'react-native-modal';
 import Moment from 'react-moment';
@@ -34,6 +35,10 @@ class HomeScreen extends React.Component {
     });
 
     // console.log(Expo.FileSystem.getInfoAsync('SQLite/profile.db'));
+
+    // temporarily hard-coded parent ID for testing (Aloysius: 5a270686a0d3760014197891),
+    // to be replaced by parent ID that is actually logged in
+    this.props.dispatch(updateParentId("5a270686a0d3760014197891"));
 
     this.props.dispatch(fetchRequests());
   }
@@ -60,8 +65,8 @@ class HomeScreen extends React.Component {
               user = rows._array[0].parentId;
             }
 
-            console.log('count', count);
-            console.log('user', user);
+            // console.log('count', count);
+            // console.log('user', user);
           }
         );
 

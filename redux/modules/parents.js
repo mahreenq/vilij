@@ -75,7 +75,14 @@ export const postParent = parent => dispatch => {
   })
     .then(parentsData => {
       dispatch(resetParentsLoading());
-      dispatch(setParentId(parentsData._bodyText));
+
+      let parentId = parentsData._bodyText;
+
+      if (parentId.substr(0, 1) == '"') {
+        parentId = parentId.substr(1, parentId.length - 2);
+      }
+
+      dispatch(setParentId(parentId));
     })
     .catch(error => {
       console.log(error);

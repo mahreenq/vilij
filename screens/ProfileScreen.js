@@ -31,7 +31,6 @@ class ProfileScreen extends React.Component {
   toggleModal() {
     this.props.dispatch(updateModal(0));
     this.props.dispatch(fetchParents());
-    console.log('parent ID', this.props.parentId);
   }
 
   render() {

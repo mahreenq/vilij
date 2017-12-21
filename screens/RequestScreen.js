@@ -23,9 +23,7 @@ class RequestScreen extends React.Component {
   }
 
   offerButton(needId, requestName) {
-    // temporary, hard-coded parent ID for testing,
-    // to be replaced by parent ID that is actually logged in
-    let parentId = '5a270686a0d3760014197891'; // Aloysius
+    let parentId = this.props.parentId;
 
     this.props.dispatch(offerHelp(needId, parentId, requestName));
     this.props.dispatch(fetchRequests());
@@ -58,7 +56,8 @@ class RequestScreen extends React.Component {
 
 const mapStateToProps = state => ({
   isLoading: state.requests.isLoading,
-  requestData: state.requests.requestsData
+  requestData: state.requests.requestsData,
+  parentId: state.parents.parentId
 });
 
 export default connect(mapStateToProps)(RequestScreen);

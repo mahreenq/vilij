@@ -169,9 +169,7 @@ class CalendarScreen extends React.Component {
         monthName = this.getMonthName(monthNo);
       }
 
-      // temporary, hard-coded parent ID for testing,
-      // to be replaced by parent ID that is actually logged in
-      let parentId = '5a270686a0d3760014197891'; // Aloysius
+      let parentId = this.props.parentId;
 
       let needsData = this.props.needsData.filter(need => {
         return (
@@ -327,7 +325,8 @@ const mapStateToProps = state => ({
   screen: state.needs.screen,
   filter: state.needs.filter,
   month: state.needs.month,
-  detailDate: state.needs.detailDate
+  detailDate: state.needs.detailDate,
+  parentId: state.parents.parentId
 });
 
 export default connect(mapStateToProps)(CalendarScreen);
