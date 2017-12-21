@@ -29,7 +29,7 @@ class HomeScreen extends React.Component {
   componentDidMount() {
     db.transaction(tx => {
       tx.executeSql(
-        'create table if not exists items (id integer primary key not null, done int, value text);'
+        'create table if not exists parent (id integer primary key not null, parentId text);'
       );
     });
 
@@ -39,26 +39,39 @@ class HomeScreen extends React.Component {
   }
 
   add(text) {
+    let count = 0;
     let user = '';
 
     db.transaction(
       tx => {
-        tx.executeSql('delete from items');
+        // tx.executeSql('delete from items');
+        // tx.executeSql('delete from parent');
 
         tx.executeSql(
-          `select * from items where value = '${text}'`,
+          `select * from parent where parentId = '${text}'`,
           [],
           (_, { rows }) => {
-            console.log('count', rows._array.length);
+            count = rows._array.length;
+
+            if (count == 0) {
+              tx.executeSql('insert into parent (parentId) values (?)', [text]);
+              user = text;
+            } else {
+              user = rows._array[0].parentId;
+            }
+
+            console.log('count', count);
+            console.log('user', user);
           }
         );
-        tx.executeSql('insert into items (done, value) values (0, ?)', [text]);
 
-        tx.executeSql('select * from items', [], (_, { rows }) => {
-          console.log(JSON.stringify(rows));
-          user = rows._array[0].value;
-          console.log('user', user);
-        });
+        // tx.executeSql('insert into items (done, value) values (0, ?)', [text]);
+
+        // tx.executeSql('select * from items', [], (_, { rows }) => {
+        //   console.log(JSON.stringify(rows));
+        //   user = rows._array[0].value;
+        //   console.log('user', user);
+        // });
       },
       null,
       null
@@ -95,7 +108,7 @@ class HomeScreen extends React.Component {
           <View style={styles.postButton}>
             <TouchableHighlight
               onPress={() => {
-                this.add('Item');
+                // this.add('Item');
                 navigate('PostNeedScreen');
               }}
             >
