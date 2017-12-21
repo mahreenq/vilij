@@ -17,10 +17,8 @@ class LoginScreen extends Component {
   }
 
   onLoginComplete(props) {
-
-    // props.token? this.props.navigation.navigate('Home') : this.props.navigation.navigate('EditProfileScreen');
     if (props.token) {
-      this.props.navigation.navigate('SetupProfileScreen');
+      this.props.navigation.navigate('EditProfileScreen');
     }
   }
 

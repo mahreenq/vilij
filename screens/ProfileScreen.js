@@ -1,23 +1,18 @@
 import React from 'react';
 import {
-  FlatList,
   Platform,
-  ScrollView,
   StyleSheet,
   Text,
-  TouchableHighlight,
   View,
+  TouchableHighlight,
   ActivityIndicator,
   ImageBackground,
-  Dimensions,
+  Dimensions
 } from 'react-native';
-import { connect } from 'react-redux';
-import { fetchRequests, updateModal } from '../redux/modules/requests';
-import { fetchNeeds } from '../redux/modules/calendar';
-import { Gravatar, GravatarApi } from 'react-native-gravatar';
 import Modal from 'react-native-modal';
-import Moment from 'react-moment';
-
+import { Gravatar, GravatarApi } from 'react-native-gravatar';
+import { fetchParents, updateModal } from '../redux/modules/parents';
+import { connect } from 'react-redux';
 
 class ProfileScreen extends React.Component {
   static navigationOptions = {
@@ -31,10 +26,14 @@ class ProfileScreen extends React.Component {
       right: 0
     },
     headerTintColor: '#fff'
-  
   };
 
- 
+  toggleModal() {
+    this.props.dispatch(updateModal(0));
+    this.props.dispatch(fetchParents());
+    console.log('parent ID', this.props.parentId);
+  }
+
   render() {
     const { navigate } = this.props.navigation;
 
@@ -46,68 +45,131 @@ class ProfileScreen extends React.Component {
           source={require('../assets/images/gradientbg.png')}
           style={styles.background}
         >
-
-
-        <View style={{flexDirection:'row', alignItems:'center', marginTop:150, justifyContent:'flex-start', width: '90%'}}>
-            <View style={{width:'20%'}} >
-                                <Gravatar options={{email: "noemail@noemail.com",}}
-                                    style={styles.roundedProfileImage} />
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginTop: 150,
+              justifyContent: 'flex-start',
+              width: '90%'
+            }}
+          >
+            <View style={{ width: '20%' }}>
+              <Gravatar
+                options={{ email: 'noemail@noemail.com' }}
+                style={styles.roundedProfileImage}
+              />
             </View>
-          <Text style={styles.name} > Logged in user's Name </Text>
-        </View>
+            <Text style={styles.name}> Logged in user's Name </Text>
+          </View>
 
-        <View style={{flexDirection:'row', alignItems:'center', marginTop:10, justifyContent:'space-between', width: '90%'}}>
-          <Text style={styles.text}> 
-            Logged in user's description. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor in
-          </Text>
-          <Text 
-          onPress={() =>
-            navigate('EditProfileScreen')
-          }
-          style={styles.edit}>
-           Edit </Text>
-        </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginTop: 10,
+              justifyContent: 'space-between',
+              width: '90%'
+            }}
+          >
+            <Text style={styles.text}>
+              Logged in user's description. Lorem ipsum dolor sit amet,
+              consectetur adipiscing elit, sed do eiusmod tempor in
+            </Text>
+            <Text
+              onPress={() => navigate('EditProfileScreen')}
+              style={styles.edit}
+            >
+              Edit{' '}
+            </Text>
+          </View>
 
-        <View style={{flexDirection:'row', alignItems:'center', marginTop:10, justifyContent:'space-between', width: '90%', borderTopWidth:1, borderBottomWidth:1, borderColor: "#fff"}}>
-          <Text style={styles.text}> Map through logged in user's children here. </Text>
-          <Text onPress={() =>
-            navigate('EditChildScreen')
-          }
-          style={styles.edit}> 
-            Edit  </Text>
-        </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginTop: 10,
+              justifyContent: 'space-between',
+              width: '90%',
+              borderTopWidth: 1,
+              borderBottomWidth: 1,
+              borderColor: '#fff'
+            }}
+          >
+            <Text style={styles.text}>
+              {' '}
+              Map through logged in user's children here.{' '}
+            </Text>
+            <Text
+              onPress={() => navigate('EditChildScreen')}
+              style={styles.edit}
+            >
+              Edit{' '}
+            </Text>
+          </View>
 
-        <View style={{flexDirection:'row', alignItems:'center', marginTop:10, justifyContent:'space-between', width: '90%'}}>
-          <Text style={styles.text}> 1234 Abcde Street </Text>
-          <Text
-           onPress={() =>
-            navigate('EditProfileScreen')
-          } 
-          style={styles.edit}> 
-            Edit 
-          </Text>
-        </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginTop: 10,
+              justifyContent: 'space-between',
+              width: '90%'
+            }}
+          >
+            <Text style={styles.text}> 1234 Abcde Street </Text>
+            <Text
+              onPress={() => navigate('EditProfileScreen')}
+              style={styles.edit}
+            >
+              Edit
+            </Text>
+          </View>
 
-        <View style={{ flexDirection: 'row', paddingTop: 50, width:'90%', justifyContent: 'space-around' }}>
-                    <Text style={styles.helped}>
-                      # Sits Offered
-                    </Text>
-                    <Text style={styles.helped}>
-                    # Sits Received
-                    </Text>
-                  </View>
-      
-  
+          <View
+            style={{
+              flexDirection: 'row',
+              paddingTop: 50,
+              width: '90%',
+              justifyContent: 'space-around'
+            }}
+          >
+            <Text style={styles.helped}># Sits Offered</Text>
+            <Text style={styles.helped}># Sits Received</Text>
+          </View>
         </ImageBackground>
-    </View>
+
+        <Modal isVisible={this.props.modal == 3}>
+          <View style={styles.modal}>
+            <Text style={styles.modalHeading}>
+              Your profile has been updated.
+            </Text>
+            <View style={styles.doneButton}>
+              <TouchableHighlight
+                onPress={() => {
+                  this.toggleModal();
+                }}
+              >
+                <Text style={styles.doneText}>Done</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+      </View>
     );
   }
 }
 
+const mapStateToProps = state => ({
+  isLoading: state.parents.isLoading,
+  parentId: state.parents.parentId,
+  modal: state.parents.modal
+});
+
+export default connect(mapStateToProps)(ProfileScreen);
+
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
-
-export default ProfileScreen;
 
 const styles = StyleSheet.create({
   mainView: {
@@ -150,8 +212,31 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#f8e9e7',
     backgroundColor: 'transparent',
-    width: '20%',
-    
+    width: '20%'
+  },
+  modal: {
+    borderRadius: 10,
+    backgroundColor: '#f8e9e7',
+    justifyContent: 'space-around',
+    alignItems: 'center'
+  },
+  modalHeading: {
+    fontSize: 22,
+    color: '#474973',
+    marginTop: '10%'
+  },
+  doneButton: {
+    borderRadius: 50,
+    alignItems: 'center',
+    marginTop: '15%',
+    marginBottom: '10%',
+    backgroundColor: '#474973',
+    width: '80%'
+  },
+  doneText: {
+    fontSize: 20,
+    color: '#f8e9e7',
+    paddingTop: '4%',
+    paddingBottom: '4%'
   }
-
 });
