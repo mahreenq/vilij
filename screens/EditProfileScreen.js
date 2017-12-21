@@ -55,43 +55,39 @@ class EditProfileScreen extends React.Component {
   };
 
   postButton() {
-    // temporary, hard-coded parent ID for testing,
-    // to be replaced by parent ID that is actually logged in
-    // let parentId = '5a270686a0d3760014197891'; // Aloysius
-
-    // let parent = {
-    //   name: this.state.parentName,
-    //   email: this.state.email,
-    //   description: this.state.description,
-    //   address: this.state.address,
-    //   children: {
-    //     name: this.state.childName,
-    //     age: this.state.age,
-    //     gender: this.state.gender,
-    //     activities: this.state.activities,
-    //     allergies: this.state.allergies,
-    //     medicalConditions: this.state.medicalConditions,
-    //     routines: this.state.routines,
-    //     additionalNotes: this.state.additionalNotes
-    //   }
-    // };
-
     let parent = {
-      name: 'William',
-      email: 'william@email.com',
-      description: 'Hard worker.',
-      address: '462 Wellington Street',
+      name: this.state.parentName,
+      email: this.state.email,
+      description: this.state.description,
+      address: this.state.address,
       children: {
-        name: 'Freddy',
-        age: '10',
-        gender: 'Male',
-        activities: 'Running and jumping.',
-        allergies: 'Homework',
-        medicalConditions: 'None.',
-        routines: 'Afternoon naptime.',
-        additionalNotes: 'Generally well behaved.'
+        name: this.state.childName,
+        age: this.state.age,
+        gender: this.state.gender,
+        activities: this.state.activities,
+        allergies: this.state.allergies,
+        medicalConditions: this.state.medicalConditions,
+        routines: this.state.routines,
+        additionalNotes: this.state.additionalNotes
       }
     };
+
+    // let parent = {
+    //   name: 'William',
+    //   email: 'william@email.com',
+    //   description: 'Hard worker.',
+    //   address: '462 Wellington Street',
+    //   children: {
+    //     name: 'Freddy',
+    //     age: '10',
+    //     gender: 'Male',
+    //     activities: 'Running and jumping.',
+    //     allergies: 'Homework',
+    //     medicalConditions: 'None.',
+    //     routines: 'Afternoon naptime.',
+    //     additionalNotes: 'Generally well behaved.'
+    //   }
+    // };
 
     this.props.dispatch(postParent(parent));
     this.props.dispatch(updateModal(3));

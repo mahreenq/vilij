@@ -150,7 +150,7 @@ class ProfileScreen extends React.Component {
                   this.toggleModal();
                 }}
               >
-                <Text style={styles.doneText}>Done</Text>
+                <Text style={styles.doneText}>OK</Text>
               </TouchableHighlight>
             </View>
           </View>
