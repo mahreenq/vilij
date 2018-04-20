@@ -108,7 +108,7 @@ class HomeScreen extends React.Component {
             style={styles.viewProfile}
             onPress={() => navigate('ProfileScreen')}
           >
-            View Profile{' '}
+            View Profile
           </Text>
           <View style={styles.postButton}>
             <TouchableHighlight
@@ -323,6 +323,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontSize: 20,
     color: '#422B4A',
-    paddingTop: 10
+    paddingTop: 10,
+    marginTop: 20
   }
 });
