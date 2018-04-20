@@ -13,11 +13,11 @@ React Native, Redux, Expo, Firebase, Gravatar and Moment.js.
 <h3>RESULT</h3> 
 <p>React Native and Expo were used to build the app.  Data was stored using MongoDB. Firebase and Facebook were used for authentication. Profile pictures are rendered using Gravatar. Group performance was optimized by using Git for version control and collaboration.</p>
 
-<p float="left">
-<img src="./screenshots/splash-01.png" alt="Initial splash screen" width="40%">
-<img src="./screenshots/splash-02.png" alt="Onboarding splash screen 2" width="40%">
+<p align="middle">
+<img src="./screenshots/splash-01.png" alt="Initial splash screen" width="30%">
+<img src="./screenshots/splash-02.png" alt="Onboarding splash screen 2" width="30%">
 </p>
 <p float="left">
-<img src="./screenshots/home.png" alt="Home tab" width="40%">
-<img src="./screenshots/need-details.png" alt="Detail need screen" width="40%">
+<img src="./screenshots/home.png" alt="Home tab" width="30%">
+<img src="./screenshots/need-details.png" alt="Detail need screen" width="30%">
 </p>
